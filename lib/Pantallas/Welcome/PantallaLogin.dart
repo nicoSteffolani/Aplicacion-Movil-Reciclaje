@@ -1,14 +1,15 @@
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/Objetos/Boton/BotonRedondeadoInicio.dart';
+import 'package:ecoinclution_proyect/Objetos/Login/OpcionLoginGF.dart';
 import 'package:ecoinclution_proyect/Objetos/text/textImput.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class Login extends StatelessWidget{
 
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kColorFondo,
       body: LoginPage()
@@ -28,6 +29,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       alignment: Alignment.center,
         child: SingleChildScrollView(
@@ -58,47 +60,44 @@ class LoginPage extends StatelessWidget {
             ),
             BotonCircular(
               color: kColorPrimario,
-              textColor: Colors.white,
+              textColor: kBlanco,
               text: "Ingresar",
               press: () {},
             ),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(bottom: 30),
-                child :Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "No tine Cuenta aún ? ",
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(bottom: 30),
+              child :Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "No tine Cuenta aún ? ",
+                    style: TextStyle(
+                    fontSize: 15,
+                  ),
+                    textAlign: TextAlign.center,
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      "Registrarse",
                       style: TextStyle(
-                      fontSize: 15,
-                    ),
-                      textAlign: TextAlign.center,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        "Registrarse",
-                        style: TextStyle(
-                          color: kColorAma,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
+                        color: kColorAma,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            Divider(
-              color: kColorVerde,
-              thickness: 3,
-              indent: 25,
-              endIndent: 25,
             ),
+            LoginGF(),
           ],
         ),
       ),
     );
   }
 }
+
+
 

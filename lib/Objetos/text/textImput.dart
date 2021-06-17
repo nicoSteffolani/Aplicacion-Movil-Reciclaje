@@ -6,7 +6,7 @@ class InputText extends StatelessWidget {
   final TextEditingController controler;
   final IconData icono;
 
-  const InputText({
+   InputText({
     Key key,
     this.text,
     this.contra,
@@ -27,16 +27,20 @@ class InputText extends StatelessWidget {
     }
   }
 
+  // validator: (val) => val.length < 6 ? 'Password too short.' : null,
+  // onSaved: (val) => _password = val,
+
+
   Container esContra(Size size) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       width: size.width * 0.8,
       child: TextField(
-        obscureText: contra,
+        obscureText: true,
         decoration: InputDecoration(
           hintText: text,
           icon: Icon(icono),
-          suffixIcon: Icon(Icons.visibility),
+            // suffixIcon: Icon(Icons.visibility),
         ),
       ),
     );
@@ -47,7 +51,6 @@ class InputText extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 20),
       width: size.width * 0.8,
       child: TextField(
-        obscureText: contra,
         decoration: InputDecoration(
           hintText: text,
           icon: Icon(icono),

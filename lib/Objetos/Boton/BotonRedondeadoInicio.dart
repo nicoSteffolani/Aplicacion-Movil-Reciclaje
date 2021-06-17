@@ -22,12 +22,19 @@ class BotonCircular extends StatelessWidget {
       width: size.width * 0.8,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(29),
-        child: FlatButton(
+        child: TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: color,
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-            color: color,
-            textColor: textColor,
-            onPressed: press,
-            child: Text(text, style: TextStyle(fontSize: 18),)
+          ),
+          onPressed: press,
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 18,
+              color: textColor,
+            ),
+          ),
         ),
       ),
     );
