@@ -39,7 +39,7 @@ class InputText extends StatelessWidget {
         obscureText: true,
         decoration: InputDecoration(
           hintText: text,
-          icon: Icon(icono),
+          icon: Icon(Icons.vpn_key_sharp),
             // suffixIcon: Icon(Icons.visibility),
         ),
       ),

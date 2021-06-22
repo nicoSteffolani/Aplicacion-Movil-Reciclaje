@@ -1,50 +1,54 @@
-import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/Objetos/Boton/BotonRedondeadoInicio.dart';
 import 'package:ecoinclution_proyect/Objetos/Login/OpcionLoginGF.dart';
 import 'package:ecoinclution_proyect/Objetos/Login/RecomendText.dart';
 import 'package:ecoinclution_proyect/Objetos/text/textImput.dart';
-import 'package:ecoinclution_proyect/Pantallas/Welcome/Register.dart';
+import 'package:ecoinclution_proyect/Pantallas/Welcome/PantallaLogin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:ecoinclution_proyect/Constants.dart';
 
-class Login extends StatelessWidget{
+
+class Registrate extends StatelessWidget{
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kColorFondo,
-      body: LoginPage()
+      body: RegisterPage(),
     );
   }
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({
+class RegisterPage extends StatelessWidget{
+
+  const RegisterPage({
     Key key,
     this.name,
+    this.mail,
     this.contra,
   }) : super(key: key);
 
   final TextEditingController name;
+  final TextEditingController mail;
   final TextEditingController contra;
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       alignment: Alignment.center,
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               margin: EdgeInsets.symmetric(vertical: 30),
-              child: Text("Inicio Sesion",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 35,
-                color: kColorAma,
-              ),
+              child: Text("Regístrate",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 35,
+                  color: kColorAma,
+                ),
               ),
             ),
             InputText(
@@ -52,16 +56,22 @@ class LoginPage extends StatelessWidget {
               contra: false,
               controler: name,
               icono: Icons.person,
-            ),
+            ), //nombre
+            InputText(
+              text: "Mail",
+              contra: false,
+              controler: mail,
+              icono: Icons.mail_outline_sharp,
+            ), //mail
             InputText(
               text: "Contraseña",
               contra: true,
               controler: contra,
-            ),
+            ), //contra
             BotonCircular(
               color: kColorPrimario,
               textColor: kBlanco,
-              text: "Ingresar",
+              text: "Aceptar",
               press: () {},
             ),
             LogText(
@@ -69,12 +79,12 @@ class LoginPage extends StatelessWidget {
                 Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context){
-                      return Registrate();
+                      return Login();
                     },
                   ),
                 );
               },
-              login: true,
+              login: false,
             ),
             LoginGF(),
           ],
@@ -82,8 +92,5 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+
 }
-
-
-
-

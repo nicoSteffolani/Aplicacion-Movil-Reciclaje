@@ -1,6 +1,7 @@
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/Objetos/Boton/BotonRedondeadoInicio.dart';
 import 'package:ecoinclution_proyect/Pantallas/Welcome/PantallaLogin.dart';
+import 'package:ecoinclution_proyect/Pantallas/Welcome/Register.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget{
@@ -36,7 +37,7 @@ class Ventana extends StatelessWidget {
             BotonCircular(
               text: "Login",
               color: kColorSecundario,
-              textColor: Colors.white,
+              textColor: kBlanco,
               press: () {
                 Navigator.push(context,
                   MaterialPageRoute(
@@ -50,8 +51,16 @@ class Ventana extends StatelessWidget {
             BotonCircular(
               text: "Registrarse",
               color: kColorVerde,
-              textColor: Colors.white,
-              press: () {},
+              textColor: kBlanco,
+              press: () {
+                Navigator.push(context,
+                  MaterialPageRoute(
+                    builder: (context){
+                      return Registrate();
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
