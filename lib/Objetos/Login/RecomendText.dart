@@ -20,7 +20,7 @@ class LogText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            login ? "No tine Cuenta aún ?  " : "Ya posees una cueta ?  ",
+            login ? "¿No tines cuenta?  " : "¿Ya tenes una cueta?  ",
             style: TextStyle(
               fontSize: 15,
             ),
@@ -29,7 +29,7 @@ class LogText extends StatelessWidget {
           GestureDetector(
             onTap: press,
             child: Text(
-              login ? "Registrarse" : "Iniciar sesión",
+              login ? "Registrate" : "Iniciar sesión",
               style: TextStyle(
                 color: kColorAma,
                 fontWeight: FontWeight.bold,

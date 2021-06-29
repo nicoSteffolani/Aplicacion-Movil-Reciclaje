@@ -7,4 +7,5 @@ const kColorVerde = Color(0xFF02AA93);
 const kColorAma = Color(0xFFF2A222);
 const kColorFondo = Colors.blueGrey;
 const kBlanco = Colors.white;
+const kNegroClaro = Color(0xCD313131);
 

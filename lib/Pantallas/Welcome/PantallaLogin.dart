@@ -3,6 +3,7 @@ import 'package:ecoinclution_proyect/Objetos/Boton/BotonRedondeadoInicio.dart';
 import 'package:ecoinclution_proyect/Objetos/Login/OpcionLoginGF.dart';
 import 'package:ecoinclution_proyect/Objetos/Login/RecomendText.dart';
 import 'package:ecoinclution_proyect/Objetos/text/textImput.dart';
+import 'package:ecoinclution_proyect/Pantallas/Principal/PantallaBase.dart';
 import 'package:ecoinclution_proyect/Pantallas/Welcome/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -62,7 +63,15 @@ class LoginPage extends StatelessWidget {
               color: kColorPrimario,
               textColor: kBlanco,
               text: "Ingresar",
-              press: () {},
+              press: () {
+                Navigator.push(context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return PaginaPrincipal();
+                    }
+                  ),
+                );
+              },
             ),
             LogText(
               press: () {
