@@ -43,7 +43,8 @@ class RegisterPage extends StatelessWidget{
           children: <Widget>[
             Container(
               margin: EdgeInsets.symmetric(vertical: 30),
-              child: Text("Regístrate",
+              child: Text( // Titulo de la pagina
+                "Regístrate",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 35,
@@ -51,42 +52,42 @@ class RegisterPage extends StatelessWidget{
                 ),
               ),
             ),
-            InputText(
+            InputText( // Espacio para ingrasar el nombre de usuario
               text: "Nombre de Usuario",
               contra: false,
               controler: name,
               icono: Icons.person,
             ), //nombre
-            InputText(
+            InputText( // Espacio para ingrasar el mail
               text: "Mail",
               contra: false,
               controler: mail,
               icono: Icons.mail_outline_sharp,
             ), //mail
-            InputText(
+            InputText( // Espacio para ingrasar la contraseña
               text: "Contraseña",
               contra: true,
               controler: contra,
             ), //contra
-            BotonCircular(
+            BotonCircular( // Boton para validar los datos
               color: kColorPrimario,
               textColor: kBlanco,
               text: "Aceptar",
-              press: () {},
+              press: () {}, // Todo validar los datos que se ingrasan
             ),
-            LogText(
+            LogText(  // Texto que ofrece iniciar sesion en caso de ya tener cuenta
               press: () {
                 Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context){
-                      return Login();
+                      return Login(); // Redirecciona a la venatana de login
                     },
                   ),
                 );
               },
               login: false,
             ),
-            LoginGF(),
+            LoginGF(), // Genre el divisor y los dos botones que te perimeten registrarte con google o Facebook
           ],
         ),
       ),

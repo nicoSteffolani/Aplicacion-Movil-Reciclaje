@@ -16,19 +16,19 @@ class BotonCircular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size; // Devulve las dimenciones de la pantalla en los ejes X e Y
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       width: size.width * 0.8,
-      child: ClipRRect(
+      child: ClipRRect( // Crea un rectangulo con bordes circulares dentro del cual puede ir el boton
         borderRadius: BorderRadius.circular(29),
         child: TextButton(
-          style: TextButton.styleFrom(
+          style: TextButton.styleFrom( // Constructor del boton
             backgroundColor: color,
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
           ),
           onPressed: press,
-          child: Text(
+          child: Text( // Muestra el texto de la variable text dentro del boton
             text,
             style: TextStyle(
               fontSize: 18,

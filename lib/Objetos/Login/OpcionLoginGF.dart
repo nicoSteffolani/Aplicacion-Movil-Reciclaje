@@ -21,17 +21,17 @@ class LoginGF extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(vertical: 40),
           width: size.width * 0.8,
-          child: ClipRRect(
+          child: ClipRRect( // Crea un rectangulo con bordes circulares dentro del cual puede ir el boton
             borderRadius: BorderRadius.circular(29),
-            child: TextButton(
-              style: TextButton.styleFrom(
+            child: TextButton( // el constructor del boton
+              style: TextButton.styleFrom( // El decorador de los botones de tipo TextButton
                 textStyle: TextStyle(
                   color: kBlanco,
                 ),
                 backgroundColor: kBlanco,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 60),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 60), // Esto lo separa de los demas objetos
               ),
-              onPressed: () {},
+              onPressed: () {}, // Todo hacer inicio de sesion con google funcion
               child: Image(
                 image: AssetImage("assets/images/ISconGoogle.png"),
                 alignment: Alignment.center,
@@ -52,7 +52,7 @@ class LoginGF extends StatelessWidget {
                 backgroundColor: kBlanco,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 60),
               ),
-              onPressed: () {},
+              onPressed: () {}, // Todo hacer inicio de sesion con google
               child: Image(
                 image: AssetImage("assets/images/ISconFacebook.png"),
                 alignment: Alignment.center,

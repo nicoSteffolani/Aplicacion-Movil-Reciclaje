@@ -31,14 +31,14 @@ class LoginPage extends StatelessWidget {
   final TextEditingController contra;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) { // Constructor de la ventana Login
+    return Container(  // Se coloca dentro de un container para poder centrarla
       alignment: Alignment.center,
-        child: SingleChildScrollView(
+        child: SingleChildScrollView( // Al colocarla dentro se evita problemas con la vista en caso de que se gire la pantalla
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
+            Container( // Titutlo de la ventana
               margin: EdgeInsets.symmetric(vertical: 30),
               child: Text("Inicio Sesion",
               style: TextStyle(
@@ -48,44 +48,44 @@ class LoginPage extends StatelessWidget {
               ),
               ),
             ),
-            InputText(
+            InputText( // Espacion para introducir el nombre de usuario
               text: "Nombre de Usuario",
               contra: false,
               controler: name,
               icono: Icons.person,
             ),
-            InputText(
+            InputText( // Espacion para introducir la contraseña
               text: "Contraseña",
               contra: true,
               controler: contra,
             ),
-            BotonCircular(
+            BotonCircular( // Boton para validar los datos
               color: kColorPrimario,
               textColor: kBlanco,
               text: "Ingresar",
-              press: () {
+              press: () { // Todo validar los datos que se ingresan
                 Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PaginaPrincipal();
+                      return PaginaPrincipal(); // En cado de que sea valido el usuario te redireciona a la pagina de inicio
                     }
                   ),
                 );
               },
             ),
-            LogText(
+            LogText( // Texto que ofrece crear una cuenta en caso de no tener
               press: () {
                 Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context){
-                      return Registrate();
+                      return Registrate(); // Redireciona a la pagina de register
                     },
                   ),
                 );
               },
               login: true,
             ),
-            LoginGF(),
+            LoginGF(), // Genre el divisor y los dos botones que te perimeten Iniciar secion con google o Facebook
           ],
         ),
       ),

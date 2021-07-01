@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/Pantallas/Principal/Coperativas.dart';
 import 'package:ecoinclution_proyect/Pantallas/Principal/Depositos.dart';
@@ -21,9 +22,9 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
   List<Widget> pageList = <Widget>[
 
     Mapa(),
-    PaginaCoperativa(),
-    PaginaDepositos(),
-    PaginaUsuario(),
+    ListDisplay(), //TODO diseñar la ventana de coperativas
+    PaginaDepositos(), //TODO diseñar la ventana de depositos
+    PaginaUsuario(), //TODO diseñar la ventana de usuario
 
   ];
 
@@ -31,9 +32,16 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: pageList[pageIndex],
-      bottomNavigationBar:
-      BottomNavigationBar(
+      body: PageTransitionSwitcher(
+        transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
+        FadeThroughTransition( // esto le agrega una animacion cuando cambias de ventanas
+          animation: primaryAnimation,
+          secondaryAnimation: secondaryAnimation,
+          child: child,
+        ),
+        child: pageList[pageIndex], // Indica que ventana tiene que mostrar
+      ),
+      bottomNavigationBar: BottomNavigationBar( //Se crea la barra de menu inferior
         selectedIconTheme: IconThemeData(
           size: 35,
           color: kColorPrimario,
@@ -41,22 +49,21 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
         unselectedIconTheme: IconThemeData(
           color: kBlanco,
         ),
-        // unselectedLabelStyle: TextStyle(color: kBlanco,),
         type: BottomNavigationBarType.fixed,
         backgroundColor: kNegroClaro,
         currentIndex: pageIndex,
-        onTap: (value) {
+        onTap: (value) { // Toma el valor posicional del boton en un vector de donde estan todos los botones
           setState(() {
             pageIndex = value;
           });
         },
-        items: [ //
+        items: [ // Se tiene que tener la misma cantidad de items que de ventas
           BottomNavigationBarItem(
             icon: Icon(
               Icons.map_sharp,
             ),
-            label: "",
-            tooltip: "Mapa",
+            label: "", // Esta vairable tiene que estar definida, no puede ser null
+            tooltip: "Mapa", // Cuando se mantiene apretado el boton por un periodo de tiempo, este texto aparece arriba del mismo
           ),
           BottomNavigationBarItem(
               icon: Icon(

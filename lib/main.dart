@@ -16,17 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Depositos Ecoinclution',
       theme: ThemeData(
-        primaryColor: kColorPrimario,
-        // dividerTheme: DividerThemeData(
-        //   color: kColorAma,
-        //   thickness: 3,
-        //   indent: 15,
-        //   endIndent: 15,
-        //),
-        //scaffoldBackgroundColor: kColorSecundario,
-        //backgroundColor: Colors.lightBlueAccent,
+        primaryColor: kColorPrimario, //todas la constantes estan definidas con una k al principio
       ),
-      home: WelcomeScreen(),
+      home: WelcomeScreen(), // redirecciona a la ventana de bienvenida
     );
   }
 }

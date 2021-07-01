@@ -9,3 +9,4 @@ const kColorFondo = Colors.blueGrey;
 const kBlanco = Colors.white;
 const kNegroClaro = Color(0xCD313131);
 
+// Todos los nombre comienzan con una k para identificarlos

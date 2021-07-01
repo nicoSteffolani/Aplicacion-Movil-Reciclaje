@@ -31,10 +31,13 @@ class Ventana extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Image(image: AssetImage("assets/images/logo-eco.png"),
-            width: size.width * 0.8 , height: size.height * 0.5,
+            Image(image: // Muestra una imagen
+              AssetImage("assets/images/logo-eco.png"
             ),
-            BotonCircular(
+            width: size.width * 0.8 , // con estas proporciones
+            height: size.height * 0.5,
+            ),
+            BotonCircular( // Boton de Login
               text: "Login",
               color: kColorSecundario,
               textColor: kBlanco,
@@ -42,13 +45,13 @@ class Ventana extends StatelessWidget {
                 Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context){
-                      return Login();
+                      return Login(); // Redirecciona a la ventan login
                     },
                   ),
                 );
               },
             ),
-            BotonCircular(
+            BotonCircular( // Boton de registrarse
               text: "Registrarse",
               color: kColorVerde,
               textColor: kBlanco,
@@ -56,7 +59,7 @@ class Ventana extends StatelessWidget {
                 Navigator.push(context,
                   MaterialPageRoute(
                     builder: (context){
-                      return Registrate();
+                      return Registrate(); // Redirecciona a la ventan Resgistrarse
                     },
                   ),
                 );

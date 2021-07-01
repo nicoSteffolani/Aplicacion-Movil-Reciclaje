@@ -13,20 +13,20 @@ class LogText extends StatelessWidget {
 
     @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container( // Esta dentro de un conteiner para que se pueda centrar
       alignment: Alignment.center,
       margin: EdgeInsets.only(bottom: 30),
       child :Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            login ? "¿No tines cuenta?  " : "¿Ya tenes una cueta?  ",
-            style: TextStyle(
+            login ? "¿No tines cuenta?  " : "¿Ya tenes una cueta?  ", // Dependiendo de la vairable login que se define cuando se crea un LogText
+            style: TextStyle(                                         // va a devolver un valor o el otro si es true es el primero
               fontSize: 15,
             ),
             textAlign: TextAlign.center,
           ),
-          GestureDetector(
+          GestureDetector( // Le otorga al texto la habilidad de detectar cuado se hace click sobre el
             onTap: press,
             child: Text(
               login ? "Registrate" : "Iniciar sesión",

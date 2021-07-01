@@ -6,19 +6,18 @@ import 'package:latlong/latlong.dart';
 
 class Mapa extends StatelessWidget {
 
-  @override
   Widget _buildMap(BuildContext context) {
     return FlutterMap(
-      options: MapOptions(
+      options: MapOptions( // Indica la posicion y zoom con el que inicia el mapa
         center: LatLng(-34.12, -63.38),
         zoom: 8.0,
       ),
       layers: [
-        TileLayerOptions(
+        TileLayerOptions( // Se crea la vista del mapa sobre la cual se puede trabajar
           urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
           subdomains: ['a', 'b', 'c']
         ),
-        MarkerLayerOptions(
+        MarkerLayerOptions( // Todo llevar el constructor de los puntos del mapa a un arichivo aparte
           markers: [
             Marker(
               width: 80.0,
@@ -26,13 +25,13 @@ class Mapa extends StatelessWidget {
               point: LatLng(-34.12, -63.38),
               builder: (ctx) =>
               Container(
-                child: IconButton(icon: Icon(
+                child: IconButton(icon: Icon( // Crea un icono en el mapa con la habilidad de ser selecionado
                   Icons.add_location,
                   size: 35,
                   ),
                   onPressed: () {
                     print("seleccionado");
-                    return showAlertDialog(context);
+                    return showAlertDialog(context); // se ejecuta al presionar el icono
                   },
                 ),
               ),
@@ -55,25 +54,24 @@ class Mapa extends StatelessWidget {
 
   showAlertDialog(BuildContext context) {
 
-    // set up the buttons
-    Widget cancelButton = TextButton(
+
+    Widget cancelButton = TextButton( // Diseña el boton
       child: Text("Cancel"),
       onPressed:  () {
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(); // Al ejecutarse elimina la ultima parte de la ruta de la pagina haciendo que vuelva a la pagina anterior
       },
     );
 
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
+    AlertDialog alert = AlertDialog( // diseña la ventana de alerta
       title: Text("Punto de acopio"),
       actions: [
         cancelButton,
-      ],
+      ], //
     );
 
-    // show the dialog
-    showDialog(
+
+    showDialog( // constructor de la ventana de alerta
       context: context,
       builder: (BuildContext context) {
         return alert;
