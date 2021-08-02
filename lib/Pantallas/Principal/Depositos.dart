@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PaginaDepositos extends StatelessWidget {
-  const PaginaDepositos({Key key}) : super(key: key);
+  const PaginaDepositos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

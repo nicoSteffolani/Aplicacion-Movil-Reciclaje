@@ -1,12 +1,10 @@
 import 'package:ecoinclution_proyect/Objetos/Mapa/MapPoint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
-
+import 'package:latlong2/latlong.dart';
 
 
 class Mapa extends StatelessWidget {
-
   Widget _buildMap(BuildContext context) {
     return FlutterMap(
       options: MapOptions( // Indica la posicion y zoom con el que inicia el mapa

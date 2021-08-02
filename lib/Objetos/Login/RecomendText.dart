@@ -6,10 +6,9 @@ class LogText extends StatelessWidget {
   final Function press;
   final bool login;
   const LogText({
-    Key key,
-    this.press,
-    this.login,
-  }) : super(key: key);
+    required this.press,
+    required this.login,
+  });
 
     @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class LogText extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           GestureDetector( // Le otorga al texto la habilidad de detectar cuado se hace click sobre el
-            onTap: press,
+            onTap: () {press();},
             child: Text(
               login ? "Registrate" : "Iniciar sesión",
               style: TextStyle(

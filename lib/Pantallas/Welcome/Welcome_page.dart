@@ -18,8 +18,8 @@ class WelcomeScreen extends StatelessWidget{
 
 class Ventana extends StatelessWidget {
   const Ventana({
-    Key key,
-    @required this.size,
+    Key? key,
+    required this.size,
   }) : super(key: key);
 
   final Size size;

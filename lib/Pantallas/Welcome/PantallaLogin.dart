@@ -21,14 +21,9 @@ class Login extends StatelessWidget{
 }
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({
-    Key key,
-    this.name,
-    this.contra,
-  }) : super(key: key);
 
-  final TextEditingController name;
-  final TextEditingController contra;
+  final name = new TextEditingController();
+  final contra = new TextEditingController();
 
   @override
   Widget build(BuildContext context) { // Constructor de la ventana Login
@@ -85,7 +80,7 @@ class LoginPage extends StatelessWidget {
               },
               login: true,
             ),
-            LoginGF(), // Genre el divisor y los dos botones que te perimeten Iniciar secion con google o Facebook
+            LoginGF(context: context,), // Genre el divisor y los dos botones que te perimeten Iniciar secion con google o Facebook
           ],
         ),
       ),

@@ -28,8 +28,8 @@ class DyanmicList extends State<ListDisplay> {
                 child: new ListView.builder
                   (
                     itemCount: litems.length,
-                    itemBuilder: (BuildContext ctxt, int Index) {
-                      return new Text(litems[Index]);
+                    itemBuilder: (BuildContext ctxt, int index) {
+                      return new Text(litems[index]);
                     }
                 )
             )

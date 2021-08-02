@@ -7,11 +7,11 @@ class InputText extends StatelessWidget {
   final IconData icono;
 
    InputText({
-    Key key,
-    this.text,
-    this.contra,
-    this.controler,
-    this.icono,
+    Key? key,
+     required this.text,
+     required this.contra,
+     required this.controler,
+     this.icono = Icons.plus_one,
   }) : super(key: key);
 
 

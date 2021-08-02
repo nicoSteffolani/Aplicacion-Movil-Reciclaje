@@ -1,8 +1,6 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo marker
 
@@ -58,16 +56,14 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
               ),
               onPressed: () {
                 print("seleccionado");
-                return _point(
-                    showAlertDialog(context)
-                ); // se ejecuta al presionar el icono
+                return showAlertDialog(context); // se ejecuta al presionar el icono
               },
             ),
           ),
     );
   }
 
-  Marker newPoint(Object context) { //Crea un punto nuevo con los parametros que se pasan en el contructor de MapPoint
+  Marker newPoint(BuildContext context) { //Crea un punto nuevo con los parametros que se pasan en el contructor de MapPoint
     return _point(context);
   }
 

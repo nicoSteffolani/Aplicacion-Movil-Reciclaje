@@ -1,11 +1,27 @@
 import 'package:ecoinclution_proyect/Constants.dart';
+import 'package:ecoinclution_proyect/Objetos/Login/SignIn.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 class LoginGF extends StatelessWidget {
 
-  const LoginGF({
-    Key key,
-  }) : super(key: key);
+  final BuildContext context;
+
+  const LoginGF ({
+    Key? key,
+    required this.context}) :
+  super(key: key);
+
+  Future signIn() async{
+    final user = await GoogleSignInApi.login();
+    if (user == null){
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Falló la conexion con google')));
+    }else{
+      print(user.displayName);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +47,7 @@ class LoginGF extends StatelessWidget {
                 backgroundColor: kBlanco,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 60), // Esto lo separa de los demas objetos
               ),
-              onPressed: () {}, // Todo hacer inicio de sesion con google funcion
+              onPressed: signIn,// Todo hacer inicio de sesion con google funcion
               child: Image(
                 image: AssetImage("assets/images/ISconGoogle.png"),
                 alignment: Alignment.center,
@@ -52,7 +68,9 @@ class LoginGF extends StatelessWidget {
                 backgroundColor: kBlanco,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 60),
               ),
-              onPressed: () {}, // Todo hacer inicio de sesion con google
+              onPressed: () async {
+                await GoogleSignInApi.logout();
+              }, // Todo hacer inicio de sesion con facebook
               child: Image(
                 image: AssetImage("assets/images/ISconFacebook.png"),
                 alignment: Alignment.center,

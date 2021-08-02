@@ -6,11 +6,11 @@ class BotonCircular extends StatelessWidget {
   final Function press;
   final Color color, textColor;
   const BotonCircular({
-    Key key,
-    this.text,
-    this.press,
-    this.color,
-    this.textColor,
+    Key? key,
+    required this.text,
+    required this.press,
+    required this.color,
+    required this.textColor,
   }) : super(key: key);
 
 
@@ -27,7 +27,7 @@ class BotonCircular extends StatelessWidget {
             backgroundColor: color,
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
           ),
-          onPressed: press,
+          onPressed: () {press();},
           child: Text( // Muestra el texto de la variable text dentro del boton
             text,
             style: TextStyle(

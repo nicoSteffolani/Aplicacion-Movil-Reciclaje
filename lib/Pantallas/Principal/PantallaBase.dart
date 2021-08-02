@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 // Creo un espacio en donde puedo iniciar cualquier ventana de la lista, mostrando en todas ellas el menu inferior
 class PaginaPrincipal extends StatefulWidget {
-  const PaginaPrincipal({Key key}) : super(key: key);
+  const PaginaPrincipal({Key? key}) : super(key: key);
 
   @override
   _PaginaPrincipalState createState() => _PaginaPrincipalState();

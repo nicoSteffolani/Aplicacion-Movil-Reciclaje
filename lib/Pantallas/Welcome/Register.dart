@@ -21,16 +21,9 @@ class Registrate extends StatelessWidget{
 
 class RegisterPage extends StatelessWidget{
 
-  const RegisterPage({
-    Key key,
-    this.name,
-    this.mail,
-    this.contra,
-  }) : super(key: key);
-
-  final TextEditingController name;
-  final TextEditingController mail;
-  final TextEditingController contra;
+  final name = new TextEditingController();
+  final mail = new TextEditingController();
+  final contra = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +80,7 @@ class RegisterPage extends StatelessWidget{
               },
               login: false,
             ),
-            LoginGF(), // Genre el divisor y los dos botones que te perimeten registrarte con google o Facebook
+            LoginGF(context: context,), // Genre el divisor y los dos botones que te perimeten registrarte con google o Facebook
           ],
         ),
       ),
