@@ -1,7 +1,7 @@
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/Objetos/Login/SignIn.dart';
+import 'package:ecoinclution_proyect/Pantallas/Principal/PantallaBase.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 
 class LoginGF extends StatelessWidget {
@@ -20,6 +20,8 @@ class LoginGF extends StatelessWidget {
           .showSnackBar(SnackBar(content: Text('Falló la conexion con google')));
     }else{
       print(user.displayName);
+      print(user.email);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => PaginaPrincipal()));
     }
   }
 
