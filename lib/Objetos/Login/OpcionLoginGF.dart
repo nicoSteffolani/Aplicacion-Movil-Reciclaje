@@ -2,6 +2,8 @@ import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/Objetos/Login/SignIn.dart';
 import 'package:ecoinclution_proyect/Pantallas/Principal/PantallaBase.dart';
 import 'package:flutter/material.dart';
+import 'package:ecoinclution_proyect/Global.dart' as g;
+
 
 
 class LoginGF extends StatelessWidget {
@@ -10,18 +12,19 @@ class LoginGF extends StatelessWidget {
 
   const LoginGF ({
     Key? key,
-    required this.context}) :
+    required this.context,}) :
   super(key: key);
 
-  Future signIn() async{
-    final user = await GoogleSignInApi.login();
-    if (user == null){
+  Future signIn() async{ //TODO investigar async, await, ? despues del typo de dato
+    g.user = await GoogleSignInApi.login();
+    if (g.user != null){
+      print(g.user!.displayName);
+      print(g.user!.email);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => PaginaPrincipal()));
+
+    }else{
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Falló la conexion con google')));
-    }else{
-      print(user.displayName);
-      print(user.email);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => PaginaPrincipal()));
     }
   }
 

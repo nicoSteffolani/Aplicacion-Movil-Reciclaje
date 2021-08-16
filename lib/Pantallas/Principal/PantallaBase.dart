@@ -22,7 +22,7 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
   List<Widget> pageList = <Widget>[
 
     Mapa(),
-    ListDisplay(), //TODO diseñar la ventana de coperativas
+    FetchedData(), //TODO diseñar la ventana de coperativas
     PaginaDepositos(), //TODO diseñar la ventana de depositos
     PaginaUsuario(), //TODO diseñar la ventana de usuario
 

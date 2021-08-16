@@ -66,6 +66,8 @@ class LoginPage extends StatelessWidget {
                     }
                   ),
                 );
+                print(contra.value);
+                print(name.value);
               },
             ),
             LogText( // Texto que ofrece crear una cuenta en caso de no tener
