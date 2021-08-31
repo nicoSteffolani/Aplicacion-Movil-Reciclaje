@@ -37,6 +37,7 @@ class InputText extends StatelessWidget {
       width: size.width * 0.8,
       child: TextField(
         obscureText: true, // Esta es la principal diferencia: mustra las letras como puntos en la pantalla
+        controller: controler,
         decoration: InputDecoration(
           hintText: text,
           icon: Icon(Icons.vpn_key_sharp), // La otra diferencia es el icono
@@ -51,6 +52,7 @@ class InputText extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 20),
       width: size.width * 0.8,
       child: TextField(
+        controller: controler,
         decoration: InputDecoration(
           hintText: text,
           icon: Icon(icono),

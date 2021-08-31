@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 Future<Album> fetchAlbum() async {
   final response = await http.get(
-    Uri.parse('http://ecoinclusion.herokuapp.com/api/intermediarios/191 '),
+    Uri.parse('http://ecoinclusion.herokuapp.com/api/intermediarios/'),
 
     headers: {
       HttpHeaders.authorizationHeader: 'token 335cca20e5cf7060586db83e74d9098657f48c7c'
@@ -77,21 +77,24 @@ class _FetchedDataState extends State<FetchedData> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FutureBuilder<Album>(
-          future: futureAlbum,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var centro = snapshot.data!.centro;
-              var nombre = snapshot.data!.nombre;
-              return Text("El $nombre del centro numero $centro");
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            // By default, show a loading spinner.
-            return const CircularProgressIndicator();
-          },
-        ),
+      body: FutureBuilder<Album>(
+        future: futureAlbum,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var centro = snapshot.data!.centro;
+            var nombre = snapshot.data!.nombre;
+            return ListTile(
+              leading: Icon(Icons.account_circle, size: 40,),
+              title: Text(nombre.toString()),
+              subtitle: Text("Del centro $centro"),
+              contentPadding: EdgeInsets.only(top: 30,),
+            );
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          // By default, show a loading spinner.
+          return Center(child: const CircularProgressIndicator());
+        },
       ),
     );
   }

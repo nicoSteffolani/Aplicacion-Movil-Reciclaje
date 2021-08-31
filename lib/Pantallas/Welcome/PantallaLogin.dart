@@ -22,8 +22,8 @@ class Login extends StatelessWidget{
 
 class LoginPage extends StatelessWidget {
 
-  final name = new TextEditingController();
-  final contra = new TextEditingController();
+  final name = TextEditingController();
+  final contra = TextEditingController();
 
   @override
   Widget build(BuildContext context) { // Constructor de la ventana Login
@@ -66,8 +66,12 @@ class LoginPage extends StatelessWidget {
                     }
                   ),
                 );
-                print(contra.value);
-                print(name.value);
+                String nombre = contra.text;
+                if (nombre == ""){
+                  print("no tiene nada");
+                }
+                print(nombre);
+                print(name.text);
               },
             ),
             LogText( // Texto que ofrece crear una cuenta en caso de no tener
