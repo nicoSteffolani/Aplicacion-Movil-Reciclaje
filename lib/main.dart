@@ -26,18 +26,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kColorPrimario, //todas la constantes estan definidas con una k al principio
       ),
-      home: login(g.user),
+      home: login(g.user,context),
     );
   }
 
-  Widget login(GoogleSignInAccount? user){
+  Widget login(GoogleSignInAccount? user,context) {
     print(user);
     if (user != null) { // redirecciona a la ventana de bienvenida
       return PaginaPrincipal();
     }else{
-      return WelcomeScreen();
+      g.userRepository.hasToken().then((value) {
+        if (value){
+            return PaginaPrincipal();
+        }
+      });
+
+
     }
+    //return WelcomeScreen();
   }
 }
-
-
