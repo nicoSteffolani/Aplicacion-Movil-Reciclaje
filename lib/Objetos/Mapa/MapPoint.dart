@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:ecoinclution_proyect/Pantallas/Principal/Models.dart';
 
 class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo marker
 
   final double latitud;
   final double longitud;
   final IconData icono;
+  final Centro centro;
 
   const MapPoint(
       this.latitud,
       this.longitud,
-      this.icono
+      this.icono,
+      this.centro
       );
 
 
@@ -26,7 +29,7 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
 
 
     AlertDialog alert = AlertDialog( // diseña la ventana de alerta
-      title: Text("Punto de acopio"),
+      title: Text(centro.nombre),
       actions: [
         cancelButton,
       ], //
@@ -69,7 +72,7 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
 
   @override
   Widget build(BuildContext context) { //Constructor de MapPoint
-    return new MapPoint(longitud, latitud, icono);
+    return new MapPoint(longitud, latitud, icono,centro);
   }
   //  AVISO IMPORTANTE: cuando se hace una llamada a esta funcion dentro de Mapa.dart, debe ir acompañada siempre del metodo newPoint
   //  dado que este segundo retorna un tipo Marker el cual es  necesario para poder agregarlo a la lista de markers dentro de Mapa.dart

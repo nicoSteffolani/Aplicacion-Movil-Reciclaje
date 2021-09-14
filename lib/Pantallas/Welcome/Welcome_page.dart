@@ -10,7 +10,7 @@ class WelcomeScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return  Scaffold(
-      backgroundColor: kColorFondo,
+      backgroundColor: backgroundColor,
     body: Ventana(size: size),
     );
   }
@@ -39,8 +39,8 @@ class Ventana extends StatelessWidget {
             ),
             BotonCircular( // Boton de Login
               text: "Login",
-              color: kColorSecundario,
-              textColor: kBlanco,
+              color: buttonColor,
+              textColor: textColor,
               press: () {
                 Navigator.push(context,
                   MaterialPageRoute(
@@ -53,8 +53,8 @@ class Ventana extends StatelessWidget {
             ),
             BotonCircular( // Boton de registrarse
               text: "Registrarse",
-              color: kColorVerde,
-              textColor: kBlanco,
+              color: buttonColor,
+              textColor: textColor,
               press: () {
                 Navigator.push(context,
                   MaterialPageRoute(

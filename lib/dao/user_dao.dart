@@ -8,13 +8,14 @@ class UserDao {
     final db = await dbProvider.database;
 
     var result = db.insert(userTable, user.toDatabaseJson());
+    print(result);
     return result;
   }
 
   Future<int> deleteUser(int? id) async {
     final db = await dbProvider.database;
     var result = await db
-        .delete(userTable, where: "id = ?", whereArgs: [id]);
+        .delete(userTable);
     return result;
   }
 
@@ -22,7 +23,7 @@ class UserDao {
     final db = await dbProvider.database;
     try {
       List<Map> users = await db
-          .query(userTable, where: 'id = ?', whereArgs: [id]);
+          .query(userTable);
       if (users.length > 0) {
         return true;
       } else {
@@ -30,6 +31,24 @@ class UserDao {
       }
     } catch (error) {
       return false;
+    }
+  }
+  Future<Map<String,dynamic>> selectUser(int id) async {
+    final db = await dbProvider.database;
+    try {
+      List<Map<String,dynamic>> users = await db
+          .query(userTable);
+      Map<String,dynamic> map = Map();
+      print(users);
+      users.forEach((row) {
+        map = row;
+
+      });
+
+      return map;
+    } catch (error) {
+      throw Exception(error);
+
     }
   }
 }

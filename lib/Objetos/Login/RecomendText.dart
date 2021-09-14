@@ -30,7 +30,7 @@ class LogText extends StatelessWidget {
             child: Text(
               login ? "Registrate" : "Iniciar sesión",
               style: TextStyle(
-                color: kColorAma,
+                color: linkColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),

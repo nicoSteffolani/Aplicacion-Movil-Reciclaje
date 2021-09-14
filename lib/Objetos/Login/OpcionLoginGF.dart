@@ -47,9 +47,9 @@ class LoginGF extends StatelessWidget {
             child: TextButton( // el constructor del boton
               style: TextButton.styleFrom( // El decorador de los botones de tipo TextButton
                 textStyle: TextStyle(
-                  color: kBlanco,
+                  color: textColor,
                 ),
-                backgroundColor: kBlanco,
+                backgroundColor: iconColor,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 60), // Esto lo separa de los demas objetos
               ),
               onPressed: signIn,// Todo hacer inicio de sesion con google funcion
@@ -63,14 +63,14 @@ class LoginGF extends StatelessWidget {
         ),
         Container(
           width: size.width * 0.8,
-          child: ClipRRect(
+          child:  ClipRRect(
             borderRadius: BorderRadius.circular(29),
             child: TextButton(
               style: TextButton.styleFrom(
                 textStyle: TextStyle(
-                  color: kBlanco,
+                  color: textColor,
                 ),
-                backgroundColor: kBlanco,
+                backgroundColor: iconColor,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 60),
               ),
               onPressed: () async {

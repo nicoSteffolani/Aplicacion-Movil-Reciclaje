@@ -75,7 +75,7 @@ class _PaginaPrincipalState extends State<PaginaPrincipal> {
           ),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.add_to_drive,
+                Icons.add,
               ),
               label: "",
               backgroundColor: kBlanco,

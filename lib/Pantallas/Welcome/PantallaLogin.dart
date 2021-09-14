@@ -15,7 +15,7 @@ class Login extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kColorFondo,
+      backgroundColor: backgroundColor,
       body: LoginPage()
     );
   }
@@ -65,8 +65,8 @@ class _LoginPage extends State<LoginPage> {
               style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
             ),
             BotonCircular( // Boton para validar los datos
-              color: kColorPrimario,
-              textColor: kBlanco,
+              color: buttonColor,
+              textColor: textColor,
               text: "Ingresar",
               press: () async { // Todo validar los datos que se ingresan
                 await userRepository.authenticate(username: name.text, password: contra.text).then((value) {
