@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
     MapPage(),
     CooperativesPage(),
-    DepositsPage(), 
+    DepositsPage(),
     UserPage(), //TODO diseñar la ventana de usuario
 
   ];
