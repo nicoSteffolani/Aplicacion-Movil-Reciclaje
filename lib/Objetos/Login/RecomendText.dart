@@ -1,4 +1,3 @@
-import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:flutter/material.dart';
 
 
@@ -19,21 +18,15 @@ class LogText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            login ? "¿No tines cuenta?  " : "¿Ya tenes una cueta?  ", // Dependiendo de la vairable login que se define cuando se crea un LogText
-            style: TextStyle(                                         // va a devolver un valor o el otro si es true es el primero
-              fontSize: 15,
-            ),
+            login ? "No tines cuenta?  " : "Ya tienes una cuenta?  ", // Dependiendo de la vairable login que se define cuando se crea un LogText
+            style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
           GestureDetector( // Le otorga al texto la habilidad de detectar cuado se hace click sobre el
             onTap: () {press();},
             child: Text(
               login ? "Registrate" : "Iniciar sesión",
-              style: TextStyle(
-                color: linkColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
         ],

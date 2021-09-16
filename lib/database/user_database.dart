@@ -46,7 +46,8 @@ class DatabaseProvider {
       "CREATE TABLE $userTable ("
       "id INTEGER PRIMARY KEY, "
       "username TEXT, "
-      "token TEXT  "
+      "token TEXT,  "
+      "theme BOOLEAN  "
       ")"
     );
   }

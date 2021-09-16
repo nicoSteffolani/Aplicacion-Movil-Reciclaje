@@ -1,15 +1,16 @@
 import 'package:ecoinclution_proyect/Objetos/Mapa/MapPoint.dart';
+import 'package:ecoinclution_proyect/api_connection/center_api.dart';
+import 'package:ecoinclution_proyect/models/center_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:ecoinclution_proyect/Pantallas/Principal/Models.dart';
 
-class Mapa extends StatelessWidget {
+class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Centro>>(
-        future: fetchCentros(),
+      body: FutureBuilder<List<CenterModel>>(
+        future: fetchCenters(),
         builder: (context, snapshot) {
 
           if (snapshot.hasData) {
@@ -38,14 +39,13 @@ class Mapa extends StatelessWidget {
               ],
             );
           } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
+            return Text('error en el mapa');
           }
           // By default, show a loading spinner.
-          return const Scaffold(
-              body: Center(
+          return Center(
                   child: CircularProgressIndicator()
-              )
-          );
+              );
+
         },
       ),
     );

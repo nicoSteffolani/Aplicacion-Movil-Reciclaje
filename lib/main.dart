@@ -1,73 +1,60 @@
-import 'package:ecoinclution_proyect/Pantallas/Welcome/Welcome_page.dart';
+import 'package:ecoinclution_proyect/routes/route_generator.dart';
+import 'package:ecoinclution_proyect/themes/themes.dart';
+import 'package:ecoinclution_proyect/views/main/tabs_view.dart';
+import 'package:ecoinclution_proyect/views/views.dart';
+import 'package:ecoinclution_proyect/views/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/Constants.dart';
-// import 'package:ecoinclution_proyect/Objetos/Login/OpcionLoginGF.dart';
-import 'package:ecoinclution_proyect/Pantallas/Principal/PantallaBase.dart';
 import 'package:ecoinclution_proyect/Global.dart' as g;
-import 'package:google_sign_in/google_sign_in.dart';
-
-// final user = LoginGF.user;
 
 
-void main() {
+
+
+void main() async {
+
   runApp(MyApp());
 }
+
 class MyApp extends StatefulWidget {
 
   @override
   _MyApp createState() => _MyApp();
 }
 class _MyApp extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    currentTheme.init();
+    currentTheme.addListener(() {
+      setState(() {});
+    });
+  }
   // This widget is the root of your application.
-  final GoogleSignInAccount? user = g.user;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Depositos Ecoinclution',
-      theme: ThemeData(
-        primaryColor: kColorPrimario, //todas la constantes estan definidas con una k al principio
-      ),
-      home: FutureBuilder<Widget>(
-        future: login(g.user,context),
-        builder: (context, snapshot) {
-
-          if (snapshot.hasData) {
-            return snapshot.data!;
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
+      theme: CustomTheme.lightTheme,
+      highContrastTheme: CustomTheme.lightTheme,
+      darkTheme: CustomTheme.darkTheme,
+      themeMode: currentTheme.currentTheme,
+      initialRoute: "/",
+      onGenerateRoute: RouteGenerator.generateRoute,
+      home: FutureBuilder<bool>(
+        future: g.userRepository.hasToken(id: 0),
+        builder: (context,snapshot) {
+          if (snapshot.hasData){
+            if (snapshot.data!){
+              return HomePage();
+            }else{
+              return WelcomePage();
+            }
           }
-          // By default, show a loading spinner.
-          return const Scaffold(
-              body: Center(
-                  child: CircularProgressIndicator()
-              )
-          );
-        },
-      )
+          return LoadingPage();
+        }
+      ),
+
     );
   }
 
-  Future<Widget> login(GoogleSignInAccount? user,context) async {
-    for (int i = 0; i < 20; i++) {
-      await g.userRepository.deleteToken(id: i);
 
-    }
-
-    Widget widget = WelcomeScreen();
-    if (user != null) { // redirecciona a la ventana de bienvenida
-      widget =  PaginaPrincipal();
-    }else{
-
-      await g.userRepository.hasToken().then((value) {
-        print(value);
-        if (value){
-          widget = PaginaPrincipal();
-        }
-      });
-
-
-
-    }
-    return widget;
-  }
 }

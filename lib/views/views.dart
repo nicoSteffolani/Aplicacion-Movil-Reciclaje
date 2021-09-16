@@ -1,0 +1,9 @@
+export 'package:ecoinclution_proyect/views/auth/login_view.dart';
+export 'package:ecoinclution_proyect/views/auth/register_view.dart';
+export 'package:ecoinclution_proyect/views/main/cooperatives_tab_view.dart';
+export 'package:ecoinclution_proyect/views/main/depostits_tab_view.dart';
+export 'package:ecoinclution_proyect/views/main/map_tab_view.dart';
+export 'package:ecoinclution_proyect/views/main/tabs_view.dart';
+export 'package:ecoinclution_proyect/views/main/user_tab_view.dart';
+export 'package:ecoinclution_proyect/views/welcome/welcome_view.dart';
+export 'package:ecoinclution_proyect/views/loading_view.dart';

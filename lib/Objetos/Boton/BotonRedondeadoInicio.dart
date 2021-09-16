@@ -23,17 +23,10 @@ class BotonCircular extends StatelessWidget {
       child: ClipRRect( // Crea un rectangulo con bordes circulares dentro del cual puede ir el boton
         borderRadius: BorderRadius.circular(29),
         child: TextButton(
-          style: TextButton.styleFrom( // Constructor del boton
-            backgroundColor: color,
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-          ),
           onPressed: () {press();},
           child: Text( // Muestra el texto de la variable text dentro del boton
             text,
-            style: TextStyle(
-              fontSize: 18,
-              color: textColor,
-            ),
+            style: Theme.of(context).textTheme.button
           ),
         ),
       ),

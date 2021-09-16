@@ -1,6 +1,6 @@
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/Objetos/Login/SignIn.dart';
-import 'package:ecoinclution_proyect/Pantallas/Principal/PantallaBase.dart';
+import 'package:ecoinclution_proyect/views/main/tabs_view.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoinclution_proyect/Global.dart' as g;
 
@@ -20,7 +20,7 @@ class LoginGF extends StatelessWidget {
     if (g.user != null){
       print(g.user!.displayName);
       print(g.user!.email);
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => PaginaPrincipal()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
 
     }else{
       ScaffoldMessenger.of(context)

@@ -1,26 +1,31 @@
+import 'package:ecoinclution_proyect/models/center_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:ecoinclution_proyect/Pantallas/Principal/Models.dart';
+
 
 class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo marker
 
   final double latitud;
   final double longitud;
   final IconData icono;
-  final Centro centro;
+  final CenterModel center;
 
   const MapPoint(
       this.latitud,
       this.longitud,
       this.icono,
-      this.centro
+      this.center
       );
 
 
   showAlertDialog(BuildContext context) { //Se crea la ventana de alerta que se muestra al tocar el icono
-    Widget cancelButton = TextButton( // Diseña el boton
-      child: Text("Cancel"),
+    Widget cancelButton = OutlinedButton( // Diseña el boton
+      child: Text(
+        "Cancel",
+        style: Theme.of(context).textTheme.bodyText2,
+      ),
       onPressed: () {
         Navigator.of(context)
             .pop(); // Al ejecutarse elimina la ultima parte de la ruta de la pagina haciendo que vuelva a la pagina anterior
@@ -29,7 +34,7 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
 
 
     AlertDialog alert = AlertDialog( // diseña la ventana de alerta
-      title: Text(centro.nombre),
+      title: Text(center.nombre),
       actions: [
         cancelButton,
       ], //
@@ -72,7 +77,12 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
 
   @override
   Widget build(BuildContext context) { //Constructor de MapPoint
-    return new MapPoint(longitud, latitud, icono,centro);
+    return new MapPoint(longitud, latitud, icono,center);
+  }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<CenterModel>('center', center));
   }
   //  AVISO IMPORTANTE: cuando se hace una llamada a esta funcion dentro de Mapa.dart, debe ir acompañada siempre del metodo newPoint
   //  dado que este segundo retorna un tipo Marker el cual es  necesario para poder agregarlo a la lista de markers dentro de Mapa.dart
