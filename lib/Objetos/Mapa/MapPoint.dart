@@ -63,7 +63,6 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
                 size: 35,
               ),
               onPressed: () {
-                print("seleccionado");
                 return showAlertDialog(context); // se ejecuta al presionar el icono
               },
             ),

@@ -1,14 +1,37 @@
 import 'package:ecoinclution_proyect/Objetos/Mapa/MapPoint.dart';
 import 'package:ecoinclution_proyect/api_connection/center_api.dart';
+import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/models/center_model.dart';
+import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:ecoinclution_proyect/Global.dart' as g;
 
 class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Map"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.brightness_4_rounded),
+            onPressed: () async {
+              await g.userRepository.getUser(id: 0).then((value) async {
+                var user = value;
+                currentTheme.toggleThemeBool(!(user.theme));
+                await g.userRepository.updateUser(user: User(id: user.id, username: user.username,token: user.token,theme: !(user.theme)));
+              });
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+            },
+          ),
+        ],
+      ),
       body: FutureBuilder<List<CenterModel>>(
         future: fetchCenters(),
         builder: (context, snapshot) {

@@ -34,9 +34,20 @@ class CenterModel {
       horarioInicio: json['horario_inicio'],
       horarioFinal: json['horario_final'],
       verificado: json['verificado'],
-
     );
   }
+
+  Map <String, dynamic> toDatabaseJson() => {
+    "url": this.url,
+    "id": this.id,
+    "nombre": this.nombre,
+    "lat": this.lat,
+    "long": this.long,
+    "telefono": this.telefono,
+    "horarioInicio": this.horarioInicio,
+    "horarioFinal": this.horarioFinal,
+    "verificado": this.verificado,
+  };
 }
 
 

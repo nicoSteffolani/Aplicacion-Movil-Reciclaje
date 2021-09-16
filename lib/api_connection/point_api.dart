@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:ecoinclution_proyect/models/center_model.dart';
+import 'package:ecoinclution_proyect/models/point_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/Global.dart' as g;
 
-Future<List<CenterModel>> fetchCenters() async {
+Future<List<Point>> fetchPoints() async {
   User user = User();
   await g.userRepository.getUser(id: 0).then((value) {
     print("ok");
@@ -13,7 +13,7 @@ Future<List<CenterModel>> fetchCenters() async {
     throw Exception('Failed to get user. ' + error);
   });
   final response = await http.get(
-    Uri.parse('http://ecoinclusion.herokuapp.com/api/centros/'),
+    Uri.parse('http://ecoinclusion.herokuapp.com/api/puntos/'),
     headers: <String, String>{
       'Authorization': 'token ' + user.token,
     },
@@ -26,14 +26,14 @@ Future<List<CenterModel>> fetchCenters() async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     List<dynamic> list_map ;
-    List<CenterModel> list = [];
+    List<Point> list = [];
     try{
       list_map = jsonDecode(response.body);
 
       list_map.forEach((row) {
 
-        CenterModel centro = CenterModel.fromJson(row);
-        list.add(centro);
+        Point point = Point.fromJson(row);
+        list.add(point);
       });
     } catch (e) {
       throw Exception("cant decode body. " + e.toString());

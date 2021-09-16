@@ -1,4 +1,5 @@
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
+import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoinclution_proyect/Global.dart' as g;
 
@@ -16,6 +17,26 @@ class _UserPageState extends State<UserPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
+              appBar: AppBar(
+                title: Text("Usuario"),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.brightness_4_rounded),
+                    onPressed: () async {
+                      await g.userRepository.getUser(id: 0).then((value) async {
+                        var user = value;
+                        currentTheme.toggleThemeBool(!(user.theme));
+                        await g.userRepository.updateUser(user: User(id: user.id, username: user.username,token: user.token,theme: !(user.theme)));
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.settings),
+                    onPressed: () {
+                    },
+                  ),
+                ],
+              ),
               body:Container(
                 alignment: Alignment.center,
                 child: Column(
@@ -53,10 +74,12 @@ class _UserPageState extends State<UserPage> {
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold, color: Colors.red),
                                   ),
-                                  onPressed: (){
-                                    g.userRepository.deleteToken(id: 0);
-                                    Navigator.of(context)
-                                        .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+                                  onPressed: ()  {
+                                    g.userRepository.deleteToken(id: 0).then((_) {
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+                                    });
+
                                   },
                                 ),
                               ],

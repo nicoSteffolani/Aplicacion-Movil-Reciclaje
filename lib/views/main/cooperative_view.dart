@@ -1,18 +1,23 @@
-import 'package:ecoinclution_proyect/api_connection/center_api.dart';
+import 'package:ecoinclution_proyect/api_connection/point_api.dart';
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/models/center_model.dart';
+import 'package:ecoinclution_proyect/models/point_model.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoinclution_proyect/Global.dart' as g;
 
-class CooperativesPage extends StatefulWidget {
-  const CooperativesPage({Key? key}) : super(key: key);
+class CooperativePage extends StatefulWidget {
+  final CenterModel center;
+  CooperativePage({required this.center});
 
   @override
-  _CooperativesPageState createState() => _CooperativesPageState();
+  _CooperativePageState createState() => _CooperativePageState(center: center);
 }
 
-class _CooperativesPageState extends State<CooperativesPage> {
+class _CooperativePageState extends State<CooperativePage> {
+  final CenterModel center;
+  _CooperativePageState({required this.center});
+
   String formatTime(String time){
     DateTime dateTime = DateTime.parse('2021-01-01 ${time}');
     return '${dateTime.hour}:${dateTime.minute}0';
@@ -21,7 +26,7 @@ class _CooperativesPageState extends State<CooperativesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cooperativas"),
+        title: Text("Cooperativa: ${center.nombre}"),
         actions: [
           IconButton(
             icon: const Icon(Icons.brightness_4_rounded),
@@ -40,17 +45,18 @@ class _CooperativesPageState extends State<CooperativesPage> {
           ),
         ],
       ),
+
       body: Center(
 
 
-        child: FutureBuilder<List<CenterModel>>(
-          future: fetchCenters(),
+        child: FutureBuilder<List<Point>>(
+          future: fetchPoints(),
           builder: (context, snapshot) {
 
             if (snapshot.hasData) {
-              List<CenterModel> list = [];
+              List<Point> list = [];
               snapshot.data!.forEach((row){
-                if (row.verificado){
+                if (row.center == center.id){
                   list.add(row);
                 }
               });
@@ -60,11 +66,11 @@ class _CooperativesPageState extends State<CooperativesPage> {
                   itemBuilder: (_,index) {
                     return ListTile(
                       title: Text(
-                        'Cooperativa ${list[index].nombre}'
+                          'Punto: ${list[index].name}'
                       ),
-                      subtitle: Text("Horario de atencion: de ${(list[index].horarioInicio == null)? '00:00': formatTime(list[index].horarioInicio)} hasta ${(list[index].horarioFinal == null)? '23:59': formatTime(list[index].horarioFinal)}"),
+                      subtitle: Text("Recicla: ${list[index].tipoDeReciclado}"),
                       onTap: (){
-                        Navigator.of(context).pushNamed("/cooperative",arguments: {"center": list[index].toDatabaseJson()});
+
                       },
 
                     );

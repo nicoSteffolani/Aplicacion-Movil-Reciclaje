@@ -70,26 +70,24 @@ class CustomTheme extends ChangeNotifier{
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
+
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         unselectedIconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        unselectedLabelStyle: TextStyle(
           color: Colors.white,
         ),
+
+        unselectedItemColor: Color(0xFFFFFFFF),
         selectedIconTheme:IconThemeData(
-          color: Colors.white,
+          color: Colors.black,
           size: 35,
         ),
-        selectedLabelStyle: TextStyle(
-          color: Colors.black
-        ),
+        selectedItemColor: Color(0xFF000000),
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.green,
       ),
-
+      
     );
   }
   static ThemeData get darkTheme {
@@ -138,16 +136,12 @@ class CustomTheme extends ChangeNotifier{
         unselectedIconTheme: IconThemeData(
           color: Colors.white,
         ),
-        unselectedLabelStyle: TextStyle(
-          color: Colors.white,
-        ),
+        unselectedItemColor: Color(0xFFFFFFFF),
         selectedIconTheme:IconThemeData(
-          color: Colors.white,
+          color: Colors.green,
           size: 35,
         ),
-        selectedLabelStyle: TextStyle(
-            color: Colors.white
-        ),
+        selectedItemColor: Colors.green,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.black,
