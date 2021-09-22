@@ -177,6 +177,7 @@ class _EditDepositPageState extends State<EditDepositPage> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
+              Navigator.of(context).pushNamed("/settings");
             },
           ),
           IconButton(
@@ -217,11 +218,11 @@ class _EditDepositPageState extends State<EditDepositPage> {
                         .pushNamedAndRemoveUntil('/deposits', (Route<dynamic> route) => false);
                   });
                 }
-
               }
             },
-          )
+          ),
         ],
+
 
       ),
       body: Center(

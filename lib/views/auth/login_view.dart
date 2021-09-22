@@ -3,7 +3,6 @@ import 'package:ecoinclution_proyect/global.dart' as g;
 import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
 import 'package:ecoinclution_proyect/my_widgets/login/RecomendText.dart';
 import 'package:ecoinclution_proyect/my_widgets/text/textImput.dart';
-import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -25,14 +24,7 @@ class _LoginPage extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.brightness_4_rounded),
-            onPressed: () {
-              currentTheme.toggleTheme();
-            },
-          ),
-        ],
+
       ),
       body:Container(
         // Se coloca dentro de un container para poder centrarla

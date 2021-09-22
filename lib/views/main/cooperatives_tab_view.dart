@@ -1,6 +1,4 @@
-import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/models/center_model.dart';
-import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoinclution_proyect/global.dart' as g;
 
@@ -23,18 +21,9 @@ class _CooperativesPageState extends State<CooperativesPage> {
         title: Text("Cooperativas"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.brightness_4_rounded),
-            onPressed: () async {
-              await g.userRepository.getUser(id: 0).then((value) async {
-                var user = value;
-                currentTheme.toggleThemeBool(!(user.theme));
-                await g.userRepository.updateUser(user: User(id: user.id, username: user.username,token: user.token,theme: !(user.theme)));
-              });
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
+              Navigator.of(context).pushNamed("/settings");
             },
           ),
         ],

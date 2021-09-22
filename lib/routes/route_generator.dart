@@ -12,6 +12,8 @@ class RouteGenerator {
 
 
     switch (settings.name) {
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => SettingsPage());
       case '/welcome':
         return MaterialPageRoute(builder: (_) => WelcomePage());
       case '/login':

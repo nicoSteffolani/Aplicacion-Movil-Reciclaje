@@ -9,3 +9,4 @@ export 'package:ecoinclution_proyect/views/welcome/welcome_view.dart';
 export 'package:ecoinclution_proyect/views/loading_view.dart';
 export 'package:ecoinclution_proyect/views/main/cooperative_view.dart';
 export 'package:ecoinclution_proyect/views/main/edit_deposit_view.dart';
+export 'package:ecoinclution_proyect/views/main/settings_view.dart';

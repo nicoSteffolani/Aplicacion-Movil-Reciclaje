@@ -47,7 +47,7 @@ class DatabaseProvider {
       "id INTEGER PRIMARY KEY, "
       "username TEXT, "
       "token TEXT,  "
-      "theme BOOLEAN  "
+      "theme TEXT  "
       ")"
     );
   }

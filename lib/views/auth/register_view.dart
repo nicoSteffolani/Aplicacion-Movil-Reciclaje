@@ -1,7 +1,6 @@
 import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
 import 'package:ecoinclution_proyect/my_widgets/login/RecomendText.dart';
 import 'package:ecoinclution_proyect/my_widgets/text/textImput.dart';
-import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/global.dart' as g;
@@ -35,14 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Register"),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.brightness_4_rounded),
-              onPressed: () {
-                currentTheme.toggleTheme();
-              },
-            ),
-          ],
+
         ),
         body:Container(
           // Se coloca dentro de un container para poder centrarla

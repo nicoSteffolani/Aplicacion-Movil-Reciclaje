@@ -1,6 +1,5 @@
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
-import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -10,14 +9,6 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.brightness_4_rounded),
-            onPressed: () {
-              currentTheme.toggleTheme();
-            },
-          ),
-        ],
       ),
       body: Ventana(size: size),
     );

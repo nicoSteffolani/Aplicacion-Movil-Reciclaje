@@ -1,34 +1,11 @@
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoinclution_proyect/global.dart' as g;
+import 'package:theme_mode_handler/theme_mode_manager_interface.dart';
 
 CustomTheme currentTheme = CustomTheme();
 
 class CustomTheme extends ChangeNotifier{
-  static bool _isDarkTheme = false;
-
-  ThemeMode get currentTheme {
-    return _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
-  }
-  void toggleTheme() {
-    _isDarkTheme = !_isDarkTheme;
-    notifyListeners();
-  }
-  void toggleThemeBool(bool value) {
-    _isDarkTheme = value;
-    notifyListeners();
-  }
-  void init(){
-    g.userRepository.getUser(id: 0).then((value) {
-      User user = value;
-      _isDarkTheme = user.theme;
-    },onError: (error) {
-      _isDarkTheme = false;
-    });
-  }
-
-
-
   static ThemeData get lightTheme {
     return ThemeData(
       primaryColor: Color(0xFF4CAE50),
@@ -53,5 +30,36 @@ class CustomTheme extends ChangeNotifier{
         type: BottomNavigationBarType.fixed,
       ),
     );
+  }
+}
+class MyManager implements IThemeModeManager {
+  @override
+  Future<String> loadThemeMode() async {
+    String theme = "ThemeMode.system";
+    User user = await g.userRepository.getUser(id: 0);
+    theme = user.theme;
+    print("theme mode: $theme");
+    final theeme = ThemeMode.values.firstWhere(
+          (v) => v.toString() == theme,
+      orElse: () => ThemeMode.system,
+    );
+    print("temaaaaaaaaaaaaaaaaaaaaaa $theeme");
+    return theme;
+  }
+
+  @override
+  Future<bool> saveThemeMode(String value) async {
+    String theme = value;
+    bool result = false;
+    g.userRepository.getUser(id: 0).then((value) {
+      User user = value;
+      user.theme = theme;
+      g.userRepository.updateUser(user: user).then((value) => result = true, onError: (error){
+        result = false;
+      });
+    },onError: (error) {
+      result = false;
+    });
+    return result;
   }
 }

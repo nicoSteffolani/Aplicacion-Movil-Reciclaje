@@ -350,6 +350,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19"
+  theme_mode_handler:
+    dependency: "direct main"
+    description:
+      name: theme_mode_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   transparent_image:
     dependency: transitive
     description:
