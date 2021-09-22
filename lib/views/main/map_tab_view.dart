@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:ecoinclution_proyect/global.dart' as g;
+import 'package:location/location.dart';
+
 
 class MapPage extends StatelessWidget {
   @override

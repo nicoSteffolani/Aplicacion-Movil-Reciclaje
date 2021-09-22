@@ -1,5 +1,6 @@
 library ecoinclution_proyect.global;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
 import 'package:ecoinclution_proyect/repository/user_repository.dart';
 
 import 'package:ecoinclution_proyect/api_connection/apis.dart';
@@ -57,3 +58,4 @@ class Models {
 Models models = Models();
 GoogleSignInAccount? user;
 UserRepository userRepository = UserRepository();
+LocationData? location;
