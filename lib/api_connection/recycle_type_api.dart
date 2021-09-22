@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:ecoinclution_proyect/models/center_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
+import 'package:ecoinclution_proyect/models/models.dart';
+import 'package:http/http.dart' as http;
 import 'package:ecoinclution_proyect/global.dart' as g;
 
-Future<List<CenterModel>> fetchCenters() async {
+
+Future<List<RecycleType>> fetchRecycleTypes() async {
   User user = User();
   await g.userRepository.getUser(id: 0).then((value) {
     print("ok");
@@ -13,32 +14,33 @@ Future<List<CenterModel>> fetchCenters() async {
     throw Exception('Failed to get user. ' + error);
   });
   final response = await http.get(
-    Uri.parse('http://ecoinclusion.herokuapp.com/api/centros/?verificado=true'),
+    Uri.parse('http://ecoinclusion.herokuapp.com/api/tipos-de-reciclado/'),
     headers: <String, String>{
       'Authorization': 'token ' + user.token,
     },
 
   );
 
+  print(response.statusCode);
 
   if (response.statusCode == 200) {
-
     // If the server did return a 200 OK response,
     // then parse the JSON.
     List<dynamic> listMap ;
-    List<CenterModel> list = [];
+    List<RecycleType> list = [];
     try{
       listMap = jsonDecode(response.body);
 
       listMap.forEach((row) {
 
-        CenterModel centro = CenterModel.fromJson(row);
-        list.add(centro);
+        RecycleType type = RecycleType.fromJson(row);
+        list.add(type);
       });
     } catch (e) {
       throw Exception("cant decode body. " + e.toString());
     }
     return list;
+
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.

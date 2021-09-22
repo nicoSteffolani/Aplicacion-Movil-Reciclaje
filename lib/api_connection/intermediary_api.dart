@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/models/intermediary_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:ecoinclution_proyect/Global.dart' as g;
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 
 Future<List<Intermediary>> fetchIntermediarys() async {
@@ -26,12 +26,12 @@ Future<List<Intermediary>> fetchIntermediarys() async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    List<dynamic> list_map ;
+    List<dynamic> listMap ;
     List<Intermediary> list = [];
     try{
-      list_map = jsonDecode(response.body);
+      listMap = jsonDecode(response.body);
 
-      list_map.forEach((row) {
+      listMap.forEach((row) {
 
         Intermediary intermediario = Intermediary.fromJson(row);
         list.add(intermediario);

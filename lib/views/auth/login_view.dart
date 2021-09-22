@@ -1,8 +1,8 @@
 import 'package:ecoinclution_proyect/Constants.dart';
-import 'package:ecoinclution_proyect/Objetos/Boton/BotonRedondeadoInicio.dart';
-import 'package:ecoinclution_proyect/Objetos/Login/RecomendText.dart';
-import 'package:ecoinclution_proyect/Objetos/text/textImput.dart';
-import 'package:ecoinclution_proyect/Global.dart';
+import 'package:ecoinclution_proyect/global.dart' as g;
+import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
+import 'package:ecoinclution_proyect/my_widgets/login/RecomendText.dart';
+import 'package:ecoinclution_proyect/my_widgets/text/textImput.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -76,11 +76,11 @@ class _LoginPage extends State<LoginPage> {
                 textColor: textColor,
                 text: "Ingresar",
                 press: () async {
-                  await userRepository
+                  await g.userRepository
                       .authenticateUser(username: name.text, password: contra.text)
                       .then((value) {
                     print("ok");
-                    userRepository.persistToken(user: value);
+                    g.userRepository.persistToken(user: value);
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 

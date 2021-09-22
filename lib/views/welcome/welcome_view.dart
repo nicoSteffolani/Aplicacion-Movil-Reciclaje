@@ -1,5 +1,5 @@
 import 'package:ecoinclution_proyect/Constants.dart';
-import 'package:ecoinclution_proyect/Objetos/Boton/BotonRedondeadoInicio.dart';
+import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 

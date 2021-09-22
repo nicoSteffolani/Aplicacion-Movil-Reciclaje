@@ -8,12 +8,12 @@ import 'package:ecoinclution_proyect/dao/user_dao.dart';
 class UserRepository {
   final userDao = UserDao();
   Future<Map<String,dynamic>> registerUser({
-    @required String username = "",
-    @required String email = "",
-    @required String firstName = "",
-    @required String lastName = "",
-    @required String password = "",
-    @required String password2 = "",
+    String username = "",
+    String email = "",
+    String firstName = "",
+    String lastName = "",
+    String password = "",
+    String password2 = "",
   }) async {
     UserRegister userRegister = UserRegister(username: username, email: email, firstName: firstName, lastName: lastName, password: password, password2: password2);
     Map<String,dynamic> map = await postUser(userRegister);
@@ -21,8 +21,8 @@ class UserRepository {
   }
 
   Future<User> authenticateUser({
-    @required String username = "",
-    @required String password = "",
+    String username = "",
+    String password = "",
   }) async {
     UserLogin userLogin = UserLogin(username: username, password: password);
     Token token = await getToken(userLogin);
@@ -56,7 +56,6 @@ class UserRepository {
   }
 
   Future<User> getUser({@required int? id}) async {
-
     Map<String, dynamic> map = await userDao.selectUser(id);
     print(map);
     User user = User.fromDatabaseJson(map);

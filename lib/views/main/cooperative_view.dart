@@ -1,10 +1,9 @@
-import 'package:ecoinclution_proyect/api_connection/point_api.dart';
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/models/center_model.dart';
 import 'package:ecoinclution_proyect/models/point_model.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/Global.dart' as g;
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 class CooperativePage extends StatefulWidget {
   final CenterModel center;
@@ -19,7 +18,7 @@ class _CooperativePageState extends State<CooperativePage> {
   _CooperativePageState({required this.center});
 
   String formatTime(String time){
-    DateTime dateTime = DateTime.parse('2021-01-01 ${time}');
+    DateTime dateTime = DateTime.parse('2021-01-01 $time');
     return '${dateTime.hour}:${dateTime.minute}0';
   }
   @override
@@ -50,7 +49,7 @@ class _CooperativePageState extends State<CooperativePage> {
 
 
         child: FutureBuilder<List<Point>>(
-          future: fetchPoints(),
+          future: g.models.updatePoints(),
           builder: (context, snapshot) {
 
             if (snapshot.hasData) {

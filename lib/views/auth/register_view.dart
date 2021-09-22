@@ -1,12 +1,10 @@
-import 'package:ecoinclution_proyect/Objetos/Boton/BotonRedondeadoInicio.dart';
-import 'package:ecoinclution_proyect/Objetos/Login/RecomendText.dart';
-import 'package:ecoinclution_proyect/Objetos/text/textImput.dart';
+import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
+import 'package:ecoinclution_proyect/my_widgets/login/RecomendText.dart';
+import 'package:ecoinclution_proyect/my_widgets/text/textImput.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecoinclution_proyect/Constants.dart';
-import 'package:ecoinclution_proyect/Global.dart' as g;
-
-import '../../Global.dart';
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -160,11 +158,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   press: () {
                     g.userRepository.registerUser(username: usernameController.text, email: emailController.text, firstName: firstNameController.text, lastName: lastNameController.text, password: passwordController.text, password2: password2Controller.text).then((value) async {
                       print(value);
-                      await userRepository
+                      await g.userRepository
                           .authenticateUser(username: usernameController.text, password: passwordController.text)
                           .then((value) {
                         print("ok");
-                        userRepository.persistToken(user: value);
+                        g.userRepository.persistToken(user: value);
                         Navigator.of(context)
                             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 

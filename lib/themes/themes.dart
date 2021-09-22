@@ -1,6 +1,6 @@
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/Global.dart' as g;
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 CustomTheme currentTheme = CustomTheme();
 
@@ -31,122 +31,27 @@ class CustomTheme extends ChangeNotifier{
 
   static ThemeData get lightTheme {
     return ThemeData(
-      primaryColor: Colors.green,
-      backgroundColor: Colors.green,
-      scaffoldBackgroundColor: Colors.white,
-      textButtonTheme: TextButtonThemeData(
-
-        style:  TextButton.styleFrom(
-          primary: Colors.green,
-          shadowColor: Colors.black,
-          elevation: 10,
-          backgroundColor: Colors.green,
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-          textStyle:  TextStyle(
-
-            color: Colors.white,
-          ),
-        ),
-      ),
-
-      textTheme: TextTheme(
-        headline1: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-        headline2: TextStyle(
-          color: Colors.white,
-        ),
-        subtitle1: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-
-        bodyText1: TextStyle(
-          color: Colors.black,
-        ),
-        bodyText2: TextStyle(color: Colors.green),
-        button: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-
-      ),
+      primaryColor: Color(0xFF4CAE50),
+      accentColor: Color(0xFFFDFD72),
+      brightness: Brightness.light,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        unselectedIconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-
-        unselectedItemColor: Color(0xFFFFFFFF),
-        selectedIconTheme:IconThemeData(
-          color: Colors.black,
-          size: 35,
-        ),
-        selectedItemColor: Color(0xFF000000),
         showUnselectedLabels: true,
+        showSelectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.green,
+
       ),
-      
     );
   }
   static ThemeData get darkTheme {
     return ThemeData(
-      primaryColor: Colors.black,
-      accentColor: Colors.red,
-      backgroundColor: Colors.grey,
-      scaffoldBackgroundColor: Colors.grey,
-      textButtonTheme: TextButtonThemeData(
-        style:  TextButton.styleFrom(
-          primary: Colors.black,
-          shadowColor: Colors.black,
-          elevation: 10,
-          backgroundColor: Colors.black,
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-          textStyle:  TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-
-      textTheme: TextTheme(
-        headline1: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-        headline2: TextStyle(
-          color: Colors.white,
-        ),
-        subtitle1: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-
-        bodyText1: TextStyle(
-          color: Colors.black,
-        ),
-        bodyText2: TextStyle(color: Colors.white),
-        button: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-
-        ),
-      ),
+      primaryColor: Color(0xFF087E23),
+      accentColor: Color(0xFFC7B801),
+      brightness: Brightness.dark,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        unselectedIconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        unselectedItemColor: Color(0xFFFFFFFF),
-        selectedIconTheme:IconThemeData(
-          color: Colors.green,
-          size: 35,
-        ),
-        selectedItemColor: Colors.green,
         showUnselectedLabels: true,
+        showSelectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
       ),
-
     );
   }
 }

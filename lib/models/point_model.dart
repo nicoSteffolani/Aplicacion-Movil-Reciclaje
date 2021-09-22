@@ -5,6 +5,7 @@ class Point {
   final dynamic lat;
   final dynamic long;
   final dynamic center;
+  final dynamic recycleType;
   final dynamic tipoDeReciclado;
   final dynamic intermediarys;
 
@@ -15,6 +16,7 @@ class Point {
     required this.lat,
     required this.long,
     required this.center,
+    required this.recycleType,
     required this.tipoDeReciclado,
     required this.intermediarys,
   });
@@ -26,6 +28,7 @@ class Point {
       lat: json['lat'],
       long: json['long'],
       center: json['centro'],
+      recycleType: json['tipo_de_reciclado'],
       tipoDeReciclado: json['getTiporeciclado'],
       intermediarys: json['intermediarys'],
     );

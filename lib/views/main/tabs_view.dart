@@ -7,14 +7,25 @@ import 'map_tab_view.dart';
 
 // Creo un espacio en donde puedo iniciar cualquier ventana de la lista, mostrando en todas ellas el menu inferior
 class HomePage extends StatefulWidget {
+  final int? pageIndex;
 
-
+  const HomePage({Key? key,
+    this.pageIndex,
+  }): super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
 
+  @override
+  initState() {
+    if (this.widget.pageIndex != null){
+      pageIndex = this.widget.pageIndex!;
+      print(this.widget.pageIndex);
+    }
+    super.initState();
+  }
   // Lista de ventanas que puedo mostrar
   int pageIndex = 0; //Indica que venta se muestra por defecto
   List<Widget> pageList = <Widget>[

@@ -1,7 +1,7 @@
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/Global.dart' as g;
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 class UserPage extends StatefulWidget {
   @override
@@ -53,6 +53,7 @@ class _UserPageState extends State<UserPage> {
                           context: context,
                           builder: (buildcontext) {
                             return AlertDialog(
+                              backgroundColor: Theme.of(context).cardColor,
                               title: Text("Desea desloguearse"),
                               content: Text(
                                 "Debera iniciar sesion de nuevo si prosigue.",
@@ -62,7 +63,7 @@ class _UserPageState extends State<UserPage> {
                                 OutlinedButton(
                                   child: Text(
                                     "Cancelar",
-                                    style: Theme.of(context).textTheme.bodyText2,
+                                    style: Theme.of(context).textTheme.button,
                                   ),
                                   onPressed: (){
                                     Navigator.of(context).pop();
@@ -71,13 +72,14 @@ class _UserPageState extends State<UserPage> {
                                 OutlinedButton(
                                   child: Text(
                                     "Aceptar",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold, color: Colors.red),
-                                  ),
-                                  onPressed: ()  {
-                                    g.userRepository.deleteToken(id: 0).then((_) {
+                                    style: Theme.of(context).textTheme.button),
+                                  onPressed: () async {
+                                    await g.userRepository.deleteToken(id: 0).then((_) {
                                       Navigator.of(context)
-                                          .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+                                          .pushNamedAndRemoveUntil('/welcome', (Route<dynamic> route) => false);
+                                    },onError: (error){
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil('/welcome', (Route<dynamic> route) => false);
                                     });
 
                                   },

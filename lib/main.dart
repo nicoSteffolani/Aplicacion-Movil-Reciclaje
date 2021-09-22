@@ -4,14 +4,18 @@ import 'package:ecoinclution_proyect/views/main/tabs_view.dart';
 import 'package:ecoinclution_proyect/views/views.dart';
 import 'package:ecoinclution_proyect/views/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/Global.dart' as g;
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 
 
 
 void main() async {
-
   runApp(MyApp());
+  await g.userRepository.hasToken(id: 0).then((value) async {
+    if (value){
+      await g.models.updateAll();
+    }
+  });
 }
 
 class MyApp extends StatefulWidget {

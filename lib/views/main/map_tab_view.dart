@@ -1,12 +1,11 @@
-import 'package:ecoinclution_proyect/Objetos/Mapa/MapPoint.dart';
-import 'package:ecoinclution_proyect/api_connection/center_api.dart';
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/models/center_model.dart';
+import 'package:ecoinclution_proyect/my_widgets/map/MapPoint.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:ecoinclution_proyect/Global.dart' as g;
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 class MapPage extends StatelessWidget {
   @override
@@ -33,13 +32,18 @@ class MapPage extends StatelessWidget {
         ],
       ),
       body: FutureBuilder<List<CenterModel>>(
-        future: fetchCenters(),
+        future: g.models.updateCenters(),
         builder: (context, snapshot) {
 
           if (snapshot.hasData) {
             List<Marker> listMarker = [];
             snapshot.data!.forEach((row) {
-              Marker marker = MapPoint(double.parse(row.lat), double.parse(row.long), Icons.house,row).newPoint(context);
+              Marker marker = MapCenterPoint(double.parse(row.lat), double.parse(row.long), Icons.house,row).newPoint(context);
+              listMarker.add(marker);
+            });
+
+            g.models.points.forEach((row) {
+              Marker marker = MapPoint(double.parse(row.lat), double.parse(row.long), Icons.location_pin,row).newPoint(context);
               listMarker.add(marker);
             });
             return FlutterMap(
@@ -62,13 +66,12 @@ class MapPage extends StatelessWidget {
               ],
             );
           } else if (snapshot.hasError) {
-            return Text('error en el mapa');
+            return Text('Error');
           }
           // By default, show a loading spinner.
           return Center(
-                  child: CircularProgressIndicator()
-              );
-
+              child: CircularProgressIndicator()
+          );
         },
       ),
     );

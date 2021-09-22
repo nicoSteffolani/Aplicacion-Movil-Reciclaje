@@ -1,9 +1,8 @@
-import 'package:ecoinclution_proyect/api_connection/center_api.dart';
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/models/center_model.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/Global.dart' as g;
+import 'package:ecoinclution_proyect/global.dart' as g;
 
 class CooperativesPage extends StatefulWidget {
   const CooperativesPage({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class CooperativesPage extends StatefulWidget {
 
 class _CooperativesPageState extends State<CooperativesPage> {
   String formatTime(String time){
-    DateTime dateTime = DateTime.parse('2021-01-01 ${time}');
+    DateTime dateTime = DateTime.parse('2021-01-01 $time');
     return '${dateTime.hour}:${dateTime.minute}0';
   }
   @override
@@ -41,26 +40,18 @@ class _CooperativesPageState extends State<CooperativesPage> {
         ],
       ),
       body: Center(
-
-
         child: FutureBuilder<List<CenterModel>>(
-          future: fetchCenters(),
+          future: g.models.updateCenters(),
           builder: (context, snapshot) {
-
             if (snapshot.hasData) {
-              List<CenterModel> list = [];
-              snapshot.data!.forEach((row){
-                if (row.verificado){
-                  list.add(row);
-                }
-              });
+              List<CenterModel> list = snapshot.data!;
               return Scrollbar(
                 child: ListView.separated(
-                  separatorBuilder: (_,__) => Divider(height: 1,color: Colors.green),
+                  separatorBuilder: (_,__) => Divider(height: 1),
                   itemBuilder: (_,index) {
                     return ListTile(
                       title: Text(
-                        'Cooperativa ${list[index].nombre}'
+                          'Cooperativa ${list[index].nombre}'
                       ),
                       subtitle: Text("Horario de atencion: de ${(list[index].horarioInicio == null)? '00:00': formatTime(list[index].horarioInicio)} hasta ${(list[index].horarioFinal == null)? '23:59': formatTime(list[index].horarioFinal)}"),
                       onTap: (){
@@ -75,7 +66,6 @@ class _CooperativesPageState extends State<CooperativesPage> {
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
-            // By default, show a loading spinner.
             return const CircularProgressIndicator();
           },
         ),
