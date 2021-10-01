@@ -1,40 +1,53 @@
 class Deposit {
   final dynamic id;
+  dynamic place;
+  dynamic amount;
+  dynamic weight;
+  dynamic recycleType;
   dynamic date;
-  dynamic center;
-  dynamic point;
-  dynamic amounts;
+  dynamic dateOfDeposit;
+  dynamic verified;
+
   
   Deposit({
     this.id,
+    this.place,
+    this.amount,
+    this.weight,
+    this.recycleType,
     this.date,
-    this.center,
-    this.point,
-    this.amounts,
+    this.dateOfDeposit,
+    this.verified,
   });
 
   factory Deposit.fromJson(Map<String, dynamic> json) {
     return Deposit(
-      id: json['id'],
-      date: json['fecha'],
-      center: json['centro'],
-      point: json['punto_de_acopio'],
-      amounts: json['getCantidades'],
+        id: json["id"],
+        place: json["lugar"],
+        amount: json["cantidad"],
+        weight: json["peso"],
+        recycleType: json["tipo_de_reciclado"],
+        date: json["fecha"],
+        dateOfDeposit: json["fecha_deposito"],
+        verified: json["verificado"],
       
     );
   }
 
   Map <String, dynamic> toDatabaseJson() => {
     "id": this.id,
+    "lugar": this.place,
+    "cantidad": (this.amount == "")?null:this.amount,
+    "peso": (this.weight == "")?null:this.weight,
+    "tipo_de_reciclado": this.recycleType,
     "fecha": this.date,
-    "centro": this.center,
-    "punto_de_acopio": this.point,
-    "getCantidades": this.amounts,
   };
   Map <String, dynamic> toJson() => {
+    "lugar": this.place,
+    "cantidad": this.amount,
+    "peso": this.weight,
+    "tipo_de_reciclado": this.recycleType,
     "fecha": this.date,
-    "centro": this.center,
-    "punto_de_acopio": this.point,
   };
 }
 

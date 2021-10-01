@@ -10,6 +10,8 @@
         android:label="ecoinclution_proyect"
         android:usesCleartextTraffic="true"
         >
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDLozlh9jwajpYcDm2mXgsPHCZcNxUf120"/>
 
        <activity
             android:name=".MainActivity"

@@ -57,7 +57,6 @@ class UserRepository {
 
   Future<User> getUser({@required int? id}) async {
     Map<String, dynamic> map = await userDao.selectUser(id);
-    print(map);
     User user = User.fromDatabaseJson(map);
     return user;
   }

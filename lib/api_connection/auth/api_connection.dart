@@ -22,7 +22,7 @@ Future<Token> getToken(UserLogin userLogin) async {
     print(response.body);
     return Token.fromJson(json.decode(response.body));
   } else {
-    print("error");
+    print(" Error ");
     print(json.decode(response.body).toString());
     throw Exception(json.decode(response.body));
   }

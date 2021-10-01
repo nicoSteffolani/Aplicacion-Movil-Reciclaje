@@ -5,13 +5,12 @@ import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/global.dart' as g;
 
 Future<List<Deposit>> fetchDeposits() async {
-  User user = User();
-  await g.userRepository.getUser(id: 0).then((value) {
-    print("ok");
-    user = value;
-  }, onError: (error) {
-    throw Exception('Failed to get user. ' + error);
-  });
+  User user;
+  try{
+    user = await g.userRepository.getUser(id: 0);
+  }catch (e){
+    throw Exception('The user does not exist ');
+  }
   final response = await http.get(
     Uri.parse('http://ecoinclusion.herokuapp.com/api/depositos/'),
     headers: <String, String>{
@@ -19,7 +18,7 @@ Future<List<Deposit>> fetchDeposits() async {
     },
 
   );
-
+  print(response.statusCode);
 
   if (response.statusCode == 200) {
 
@@ -127,12 +126,12 @@ Future<Deposit> editDeposit(Deposit deposit) async {
       'Authorization': 'token ' + user.token,
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(deposit.toJson()),
+    body: jsonEncode(deposit.toDatabaseJson()),
 
   );
+  print(response.statusCode);
 
-
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200) {
 
     // If the server did return a 200 OK response,
     // then parse the JSON.

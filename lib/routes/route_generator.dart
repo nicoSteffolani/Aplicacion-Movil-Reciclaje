@@ -3,7 +3,6 @@ import 'package:ecoinclution_proyect/models/models.dart';
 import 'package:ecoinclution_proyect/views/views.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/global.dart' as g;
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -14,6 +13,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/settings':
         return MaterialPageRoute(builder: (_) => SettingsPage());
+      case '/account':
+        return MaterialPageRoute(builder: (_) => AccountPage());
       case '/welcome':
         return MaterialPageRoute(builder: (_) => WelcomePage());
       case '/login':
@@ -27,7 +28,6 @@ class RouteGenerator {
       case '/cooperatives':
         return MaterialPageRoute(builder: (_) => HomePage(pageIndex: 1,));
       case '/deposits':
-        g.models.updateAmounts();
         return MaterialPageRoute(builder: (_) => HomePage(pageIndex: 2,));
       case '/cooperative':
         Map<String, dynamic> map = args as Map<String, dynamic>;

@@ -23,7 +23,7 @@ class _CooperativePageState extends State<CooperativePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cooperativa: ${center.nombre}"),
+        title: Text("Cooperativa: ${center.name}"),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),

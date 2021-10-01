@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ecoinclution_proyect/api_connection/deposit_api.dart';
 import 'package:ecoinclution_proyect/models/deposit_model.dart';
 import 'package:ecoinclution_proyect/models/models.dart';
@@ -34,7 +36,7 @@ class DepositsPage extends StatelessWidget {
                 Fluttertoast.showToast(
                   msg: "Desliza un deposito para eliminarlo.",
                   toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
+                  gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 2,
                 );
                 List<Deposit> list = snapshot.data!;
@@ -46,10 +48,18 @@ class DepositsPage extends StatelessWidget {
                         key: ValueKey(list[index].id),
                         direction: DismissDirection.startToEnd,
                         onDismissed: (direction) {
-                          deleteDeposit(list[index]);
+
+                          deleteDeposit(list[index]).then((_) {
+                            list.removeAt(index);
+                          });
                         },
                         confirmDismiss: (direction) async {
-                          final result = await showDialog(context: context,builder: (_) => DeleteDeposit());
+                          bool result = await showDialog(context: context,builder: (_) => DeleteDeposit());
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Deposito ${index + 1} Eliminado.'),
+                                action: SnackBarAction(label: "Deshacer",onPressed:()=>result=false)),
+                          );
+                          await Future.delayed(Duration(seconds: 3));
                           return result;
                         },
                         background: Container(
@@ -59,35 +69,30 @@ class DepositsPage extends StatelessWidget {
                         ),
                         child: ListTile(
                           title: Text(
-                              'Deposito N°${list[index].id}'
+                              'Deposito N°${index + 1}'
                           ),
                           subtitle: Text("Fecha: ${list[index].date}"),
                           leading: IconButton(
                             icon: const Icon(Icons.info,),
                             onPressed: () {
-                              CenterModel? center;
-                              g.models.centers.forEach((element){
-                                if (element.id == list[index].center){
-                                  center = element;
+                              Place? place;
+                              g.models.points.forEach((point){
+                                if (list[index].place == point.id){
+                                  place = point;
                                 }
                               });
-                              Point? point;
-                              g.models.points.forEach((element){
-                                if (element.id == list[index].point){
-                                  point = element;
-                                }
-                              });
-                              List<AmountRecycle> amounts = [];
-                              List<RecycleType> types = [];
-                              g.models.amounts.forEach((amount){
-                                bool inserted = false;
-                                g.models.types.forEach((type){
-                                  if (amount.deposit == list[index].id && amount.recycleType == type.id && !inserted){
-                                    amounts.add(amount);
-                                    types.add(type);
-                                    inserted = true;
+                              if (place == null){
+                                g.models.centers.forEach((center){
+                                  if (list[index].place == center.id){
+                                    place = center;
                                   }
                                 });
+                              }
+                              RecycleType? type;
+                              g.models.types.forEach((element){
+                                if (list[index].recycleType == element.id){
+                                  type = element;
+                                }
                               });
                               AlertDialog info =  AlertDialog(
                                 title: Text('Deposito N°${list[index].id}'),
@@ -100,38 +105,31 @@ class DepositsPage extends StatelessWidget {
                                       subtitle : Text("${list[index].date}")
                                     ),
                                     ListTile(
-                                      leading: const Icon(Icons.house),
-                                      title: Text("Cooperativa ${center!.nombre}"),
+                                      leading: const Icon(Icons.location_pin),
+                                      title: Text("Lugar"),
+                                      subtitle : Text("${place!.name}")
                                     ),
                                     ListTile(
-                                      leading: const Icon(Icons.location_pin),
-                                      title: Text("Punto ${point!.name}"),
+                                        leading: const Icon(IconData(0xe900,fontFamily: 'custom')),
+                                        title: Text("Tipo de reciclado"),
+                                        subtitle : Text("${type!.name}")
                                     ),
-                                    Divider(thickness: 2,),
-                                    Expanded(
-                                      child:ListView.separated(
-                                        scrollDirection: Axis.vertical,
-                                        shrinkWrap: true,
-                                        separatorBuilder: (_,__) => Divider(),
-                                        itemBuilder: (_,index) {
-                                          return ListTile(
-                                            title: Text(
-                                                'Tipo de reciclado: ${types[index].name}'
-                                            ),
-                                            subtitle: Text("Cantidad: ${amounts[index].amount}, peso total ${amounts[index].weight}Kg"),
-                                          );
-                                        },
-                                        itemCount: amounts.length,
-                                      )
+                                    ListTile(
+                                      leading: const Icon(IconData(0xe902,fontFamily: 'custom')),
+                                      title: Text("Cantidad"),
+                                      subtitle : Text("${list[index].amount}")
                                     ),
-
+                                    ListTile(
+                                      leading: const Icon(IconData(0xe901,fontFamily: 'custom')),
+                                        title: Text("Peso "),
+                                        subtitle : Text("${list[index].weight} Kg")
+                                    ),
                                   ],
                                 ),
                                 actions: <Widget>[
-                                  OutlinedButton( // Diseña el boton
+                                  OutlinedButton(
                                     child: Text(
                                       "Cerrar",
-                                      style: Theme.of(context).textTheme.button,
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -159,7 +157,7 @@ class DepositsPage extends StatelessWidget {
                   ),
                 );
               }else{
-                return Text("No tienes depositos toca el '+' para agregar uno");
+                return Text("No tienes depositos toca el '+' para agregar uno.");
               }
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
@@ -172,6 +170,7 @@ class DepositsPage extends StatelessWidget {
         // isExtended: true,
         child: Icon(Icons.add),
         onPressed: () {
+
           Navigator.of(context).pushNamed("/edit_deposit",arguments: {"create": true,"deposit":null});
         },
       ),

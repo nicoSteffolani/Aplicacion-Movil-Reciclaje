@@ -1,6 +1,5 @@
 library ecoinclution_proyect.global;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:location/location.dart';
 import 'package:ecoinclution_proyect/repository/user_repository.dart';
 
 import 'package:ecoinclution_proyect/api_connection/apis.dart';
@@ -8,18 +7,12 @@ import 'package:ecoinclution_proyect/models/models.dart';
 
 
 class Models {
-  List<AmountRecycle> amounts = [];
   List<CenterModel> centers = [];
   List<Deposit> deposits = [];
   List<Intermediary> intermediarys = [];
   List<Point> points = [];
   List<RecycleType> types = [];
 
-  Future<List<AmountRecycle>> updateAmounts() async {
-    Future<List<AmountRecycle>> future = fetchAmounts();
-    amounts = await future;
-    return future;
-  }
   Future<List<CenterModel>> updateCenters() async {
     Future<List<CenterModel>> future = fetchCenters();
     centers = await future;
@@ -36,7 +29,7 @@ class Models {
     return future;
   }
   Future<List<Point>> updatePoints() async {
-    Future<List<Point>> future = fetchPoints();fetchIntermediarys();
+    Future<List<Point>> future = fetchPoints();
     points = await future;
     return future;
   }
@@ -46,16 +39,19 @@ class Models {
     return future;
   }
   Future<void> updateAll() async {
-    await updateAmounts();
-    await updateCenters();
-    await updateDeposits();
-    await updateIntermedirys();
-    await updatePoints();
-    await updateRecycleTypes();
+    try {
+      await updateCenters();
+      await updateDeposits();
+      await updateIntermedirys();
+      await updatePoints();
+      await updateRecycleTypes();
+    }
+    catch (e){
+      print("erroe en el update");
+    }
   }
 }
 
 Models models = Models();
 GoogleSignInAccount? user;
 UserRepository userRepository = UserRepository();
-LocationData? location;

@@ -40,9 +40,9 @@ class _CooperativesPageState extends State<CooperativesPage> {
                   itemBuilder: (_,index) {
                     return ListTile(
                       title: Text(
-                          'Cooperativa ${list[index].nombre}'
+                          'Cooperativa ${list[index].name}'
                       ),
-                      subtitle: Text("Horario de atencion: de ${(list[index].horarioInicio == null)? '00:00': formatTime(list[index].horarioInicio)} hasta ${(list[index].horarioFinal == null)? '23:59': formatTime(list[index].horarioFinal)}"),
+                      subtitle: Text("Horario de atencion: de ${(list[index].initTime == null)? '00:00': formatTime(list[index].initTime)} hasta ${(list[index].stopTime == null)? '23:59': formatTime(list[index].stopTime)}"),
                       onTap: (){
                         Navigator.of(context).pushNamed("/cooperative",arguments: {"center": list[index].toDatabaseJson()});
                       },

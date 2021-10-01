@@ -36,7 +36,11 @@ dependencies:
   sqflite: ^2.0.0+3
   path_provider: ^2.0.2
   fluttertoast: ^8.0.8
+  theme_mode_handler: ^3.0.0
   location: ^4.3.0
+
+  google_maps_flutter: ^2.0.9
+  flutter_polyline_points: ^1.0.0
 #  flutter_svg : ^0.22.0
 
 dev_dependencies:
@@ -84,3 +88,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: custom
+      fonts:
+        - asset: assets/fonts/ic_custom.ttf

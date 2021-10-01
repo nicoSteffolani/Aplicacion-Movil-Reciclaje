@@ -10,20 +10,22 @@ import 'package:theme_mode_handler/theme_mode_handler.dart';
 
 
 
-void main() async {
+void main() {
   runApp(MyApp());
-  await g.userRepository.hasToken(id: 0).then((value) async {
+  g.userRepository.hasToken(id: 0).then((value) {
     if (value){
-      await g.models.updateAll();
+      g.models.updateAll();
     }
+    
   });
+  
 }
 
 class MyApp extends StatefulWidget {
-
   @override
   _MyApp createState() => _MyApp();
 }
+
 class _MyApp extends State<MyApp> {
   @override
   void initState() {

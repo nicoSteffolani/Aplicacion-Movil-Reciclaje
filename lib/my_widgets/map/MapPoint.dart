@@ -25,40 +25,38 @@ class MapCenterPoint extends StatelessWidget { //Clase que contiene el punto de 
     Widget closeButton = OutlinedButton( // Diseña el boton
       child: Text(
         "Cerrar",
-        style: Theme.of(context).textTheme.button,
       ),
       onPressed: () {
         Navigator.of(context)
             .pop(); // Al ejecutarse elimina la ultima parte de la ruta de la pagina haciendo que vuelva a la pagina anterior
       },
     );
-    Widget viewButton = OutlinedButton( // Diseña el boton
-      child: Text(
-        "Abrir",
-        style: Theme.of(context).textTheme.button,
+    Widget viewButton = OutlinedButton.icon( // Diseña el boton
+      label: Text(
+        "Info.",
       ),
+      icon: Icon(Icons.info),
       onPressed: () {
         Navigator.of(context)
             .pushNamed("/cooperative",arguments:{"center": center.toDatabaseJson()}); // Al ejecutarse elimina la ultima parte de la ruta de la pagina haciendo que vuelva a la pagina anterior
       },
 
     );
-    Widget addButton = IconButton( // Diseña el boton
+    Widget addButton = OutlinedButton.icon( // Diseña el boton
 
       icon: const Icon(Icons.add),
       onPressed: () {
-        Deposit deposit = Deposit(center: center.id);
+        Deposit deposit = Deposit(place: center.id);
         Navigator.of(context).pushNamed("/edit_deposit",arguments: {"create": true,"deposit":deposit.toDatabaseJson()});
       },
-      tooltip: "Añadir deposito",
+      label: Text("Añadir deposito"),
 
     );
 
 
     AlertDialog alert = AlertDialog( // diseña la ventana de alerta
-      backgroundColor: Theme.of(context).cardColor,
-      title: Text(center.nombre,
-        style: Theme.of(context).textTheme.bodyText1,),
+      title: Text("Cooperativa: ${center.name}"),
+      content:Text("  Para ver mas informacion de esta cooperativa aprete 'Info.'\n\n   Si quiere hacer un deposito a esta cooperativa aprete el '+'"),
       actions: [
         addButton,
         viewButton,
@@ -82,16 +80,14 @@ class MapCenterPoint extends StatelessWidget { //Clase que contiene el punto de 
       height: 80.0,
       point: LatLng(latitud, longitud),
       builder: (ctx) =>
-          Container(
-            child: IconButton( // Crea un icono en el mapa con la habilidad de ser selecionado
-              icon: Icon(
-                icono,
-                size: 35,
-              ),
-              onPressed: () {
-                return showAlertDialog(context); // se ejecuta al presionar el icono
-              },
+          IconButton( // Crea un icono en el mapa con la habilidad de ser selecionado
+            icon: Icon(
+              icono,
+              size: 35,
             ),
+            onPressed: () {
+              return showAlertDialog(context); // se ejecuta al presionar el icono
+            },
           ),
     );
   }
@@ -131,18 +127,15 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
     Widget closeButton = OutlinedButton( // Diseña el boton
       child: Text(
         "Cerrar",
-        style: Theme.of(context).textTheme.button,
       ),
       onPressed: () {
         Navigator.of(context)
             .pop(); // Al ejecutarse elimina la ultima parte de la ruta de la pagina haciendo que vuelva a la pagina anterior
       },
     );
-    Widget viewButton = OutlinedButton( // Diseña el boton
-      child: Text(
-        "Abrir",
-        style: Theme.of(context).textTheme.button,
-      ),
+    Widget viewButton = OutlinedButton.icon( // Diseña el boton
+      icon: const Icon(Icons.info_outline),
+      label: Text("Info."),
       onPressed: () {
         CenterModel? center;
         g.models.centers.forEach((element){
@@ -155,22 +148,22 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
       },
 
     );
-    Widget addButton = IconButton( // Diseña el boton
-
+    Widget addButton = OutlinedButton.icon( // Diseña el boton
+      label: Text("Agregar deposito"),
       icon: const Icon(Icons.add),
       onPressed: () {
-        Deposit deposit = Deposit(center: point.center,point: point.id);
+        Deposit deposit = Deposit(place: point.id);
         Navigator.of(context).pushNamed("/edit_deposit",arguments: {"create": true,"deposit":deposit.toDatabaseJson()});
       },
-      tooltip: "Añadir deposito",
+
 
     );
 
 
     AlertDialog alert = AlertDialog( // diseña la ventana de alerta
-      backgroundColor: Theme.of(context).cardColor,
-      title: Text(point.name,
-        style: Theme.of(context).textTheme.bodyText1,),
+
+      title: Text(point.name,),
+      content:Text("  Para ver mas informacion de este Punto de acopio aprete 'Info.'\n\n   Si quiere hacer un deposito a este punto de acopio aprete el '+'"),
       actions: [
         addButton,
         viewButton,
@@ -194,17 +187,15 @@ class MapPoint extends StatelessWidget { //Clase que contiene el punto de tipo m
       height: 80.0,
       point: LatLng(latitud, longitud),
       builder: (ctx) =>
-          Container(
-            child: IconButton( // Crea un icono en el mapa con la habilidad de ser selecionado
-              icon: Icon(
-                icono,
-                size: 35,
-              ),
-              onPressed: () {
-                return showAlertDialog(context); // se ejecuta al presionar el icono
-              },
-            ),
+        IconButton( // Crea un icono en el mapa con la habilidad de ser selecionado
+          icon: Icon(
+            icono,
+            size: 35,
           ),
+          onPressed: () {
+            return showAlertDialog(context); // se ejecuta al presionar el icono
+          },
+        ),
     );
   }
 

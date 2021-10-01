@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:ecoinclution_proyect/views/main/user_tab_view.dart';
 import 'package:flutter/material.dart';
 import 'cooperatives_tab_view.dart';
 import 'depostits_tab_view.dart';
@@ -29,12 +28,9 @@ class _HomePageState extends State<HomePage> {
   // Lista de ventanas que puedo mostrar
   int pageIndex = 0; //Indica que venta se muestra por defecto
   List<Widget> pageList = <Widget>[
-
     MapPage(),
     CooperativesPage(),
     DepositsPage(),
-    UserPage(), //TODO diseñar la ventana de usuario
-
   ];
 
   @override
@@ -69,11 +65,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: "Depositos",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_pin),
-            label: "Usuario",
-
           ),
         ],
       ),

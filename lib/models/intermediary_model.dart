@@ -5,8 +5,8 @@ class Intermediary {
   final dynamic nombre;
   final dynamic telefono;
   final dynamic centro;
-  final List<dynamic> puntos;
-  final List<dynamic> dias;
+  final dynamic places;
+  final dynamic dias;
 
   Intermediary({
     required this.url,
@@ -14,7 +14,7 @@ class Intermediary {
     required this.nombre,
     required this.telefono,
     required this.centro,
-    required this.puntos,
+    required this.places,
     required this.dias,
   });
 
@@ -25,7 +25,7 @@ class Intermediary {
       nombre: json['nombre'],
       telefono: json['telefono'],
       centro: json['centro'],
-      puntos: json['puntos'],
+      places: json['lugares'],
       dias: json['dias_disponibles'],
     );
   }

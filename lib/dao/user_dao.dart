@@ -36,6 +36,7 @@ class UserDao {
         return false;
       }
     } catch (error) {
+      print(error);
       return false;
     }
   }
@@ -48,7 +49,6 @@ class UserDao {
 
       users.forEach((row) {
         map = row;
-
       });
 
       return map;

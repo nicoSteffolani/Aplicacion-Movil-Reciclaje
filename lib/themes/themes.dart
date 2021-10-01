@@ -12,10 +12,12 @@ class CustomTheme extends ChangeNotifier{
       accentColor: Color(0xFFFDFD72),
       brightness: Brightness.light,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        showUnselectedLabels: true,
+        showUnselectedLabels: false,
         showSelectedLabels: true,
         type: BottomNavigationBarType.fixed,
-
+        selectedItemColor: Color(0xFFFFFFFF),
+        unselectedItemColor: Color(0xFFFFFFFF).withOpacity(0.38),
+        backgroundColor: Color(0xFF4CAE50),
       ),
     );
   }
@@ -25,9 +27,12 @@ class CustomTheme extends ChangeNotifier{
       accentColor: Color(0xFFC7B801),
       brightness: Brightness.dark,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        showUnselectedLabels: true,
+        showUnselectedLabels: false,
         showSelectedLabels: true,
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: Color(0xFFFFFFFF),
+        unselectedItemColor: Color(0xFFFFFFFF).withOpacity(0.38),
+        backgroundColor: Color(0xFF087E23),
       ),
     );
   }
@@ -36,30 +41,28 @@ class MyManager implements IThemeModeManager {
   @override
   Future<String> loadThemeMode() async {
     String theme = "ThemeMode.system";
-    User user = await g.userRepository.getUser(id: 0);
-    theme = user.theme;
-    print("theme mode: $theme");
-    final theeme = ThemeMode.values.firstWhere(
-          (v) => v.toString() == theme,
-      orElse: () => ThemeMode.system,
-    );
-    print("temaaaaaaaaaaaaaaaaaaaaaa $theeme");
+    bool hasToken = await g.userRepository.hasToken(id: 0);
+    if (hasToken){
+      User user = await g.userRepository.getUser(id: 0);
+      print("theme mode: ${user.theme}");
+      print("paso por aca");
+      theme = user.theme;
+    }
+    
     return theme;
   }
 
   @override
   Future<bool> saveThemeMode(String value) async {
-    String theme = value;
     bool result = false;
-    g.userRepository.getUser(id: 0).then((value) {
-      User user = value;
-      user.theme = theme;
-      g.userRepository.updateUser(user: user).then((value) => result = true, onError: (error){
-        result = false;
-      });
-    },onError: (error) {
-      result = false;
-    });
+    bool hasToken = await g.userRepository.hasToken(id: 0);
+    if (hasToken){
+      User user = await g.userRepository.getUser(id: 0);
+      user.theme = value;
+      await g.userRepository.updateUser(user: user);
+      result = true;
+      print(result);
+    }
     return result;
   }
 }

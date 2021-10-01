@@ -5,13 +5,12 @@ import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:ecoinclution_proyect/global.dart' as g;
 
 Future<List<Point>> fetchPoints() async {
-  User user = User();
-  await g.userRepository.getUser(id: 0).then((value) {
-    print("ok");
-    user = value;
-  }, onError: (error) {
-    throw Exception('Failed to get user. ' + error);
-  });
+  User user;
+  try{
+    user = await g.userRepository.getUser(id: 0);
+  }catch (e){
+    throw Exception('The user does not exist ');
+  }
   final response = await http.get(
     Uri.parse('http://ecoinclusion.herokuapp.com/api/puntos/'),
     headers: <String, String>{
@@ -19,10 +18,10 @@ Future<List<Point>> fetchPoints() async {
     },
 
   );
-
+  print(response.statusCode);
 
   if (response.statusCode == 200) {
-
+    print("puntos obtenidos");
     // If the server did return a 200 OK response,
     // then parse the JSON.
     List<dynamic> listMap ;
