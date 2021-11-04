@@ -1,12 +1,10 @@
-import 'package:ecoinclution_proyect/Constants.dart';
-import 'package:ecoinclution_proyect/global.dart' as g;
-import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
+import 'package:ecoinclution_proyect/models/models_manager.dart' as g;
 import 'package:ecoinclution_proyect/my_widgets/login/RecomendText.dart';
-import 'package:ecoinclution_proyect/my_widgets/text/textImput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:ecoinclution_proyect/models/models_manager.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,16 +12,36 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  final name = TextEditingController();
-  final contra = TextEditingController();
-  String _errorText = "";
+  final _formKey = GlobalKey<FormState>();
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  String _errorUsername = "";
+  String _errorPassword = "";
+
+  bool loading = false;
+  late ModelsManager mm;
+
+  @override
+  initState() {
+    super.initState();
+    mm = context.read<ModelsManager>();
+  }
 
   @override
   Widget build(BuildContext context) {
+    mm = context.watch<ModelsManager>();
+    loading = false;
+    if(mm.modelsStatus == ModelsStatus.updating){
+      loading = true;
+
+    }
+
+    AppLocalizations? t = AppLocalizations.of(context);
     // Constructor de la ventana Login
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: Text(t!.login),
 
       ),
       body:Container(
@@ -31,73 +49,96 @@ class _LoginPage extends State<LoginPage> {
 
         child: SingleChildScrollView(
           // Al colocarla dentro se evita problemas con la vista en caso de que se gire la pantalla
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                // Titutlo de la ventana
-                margin: EdgeInsets.symmetric(vertical: 30),
-                child: Text(
-                  "Inicio de Sesion",
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ),
-              InputText(
-                // Espacion para introducir el nombre de usuario
-                text: "Nombre de Usuario",
-                typePassword: false,
-                textEditingController: name,
-                iconData: Icons.person,
-              ),
-              InputText(
-                // Espacion para introducir la contraseña
-                text: "Contraseña",
-                typePassword: true,
-                textEditingController: contra,
-              ),
-              Text(
-                _errorText,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.red),
-              ),
-              BotonCircular(
-                // Boton para validar los datos
-                color: buttonColor,
-                textColor: textColor,
-                text: "Ingresar",
-                press: () async {
-                  await g.userRepository
-                      .authenticateUser(username: name.text, password: contra.text)
-                      .then((value) {
-                    print("ok");
-                    g.userRepository.persistToken(user: value);
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    t.login,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  TextFormField(
+                    enabled: !loading,
+                      validator:(val){
+                        if(val == null || val == "" ) {
+                          return t.required;
+                        }
+                        if (_errorUsername != ''){
+                          return _errorUsername;
+                        }
+                      },
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        labelText: t.username,
+                        hintText: t.username,
+                        icon: Icon(Icons.person),
+                      )
+                  ),
 
-                    setState(() {
-                      _errorText = '';
-                    });
-                  }, onError: (error) {
-                    print(error);
-                    setState(() {
-                      _errorText = "username or password incorrect";
-                    });
-                  });
-                  print(_errorText);
-                },
-              ),
+                  TextFormField(
+                      enabled: !loading,
+                      validator:(val){
+                        if(val == null || val == "" ) {
+                          return t.required;
+                        }
+                        if (_errorPassword != ''){
+                          return _errorPassword;
+                        }
+                      },
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: t.password,
+                        hintText: t.password,
+                        icon: Icon(Icons.vpn_key_sharp),
+                      )
+                  ),
+                  Container(height:16),
+                  ElevatedButton.icon(
+                    icon: (loading)? CircularProgressIndicator(): Container(),
+                    autofocus: true,
+                      onPressed: (!loading)?() async {
+                        setState(() {
+                          _errorUsername = "";
+                          _errorPassword = "";
+                        });
+                        if (_formKey.currentState!.validate()) {
+                          mm.authenticateUser(username: usernameController.text,
+                              password: passwordController.text)
+                              .then((value) {
+                            g.userRepository.persistToken(user: value);
+                            Navigator.of(context)
+                                .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 
-              LogText(
-                // Texto que ofrece crear una cuenta en caso de no tener
-                press: () {
-                  Navigator.of(context).popAndPushNamed("/register");
-                },
-                login: true,
-              ),
+                          }, onError: (error) {
+                            setState(() {
+                              print(error);
+                              _errorUsername = (error['non_field_errors'].toString() == "null")? "": error['non_field_errors'][0].toString();
+                              _errorPassword = (error['non_field_errors'].toString() == "null")? "": error['non_field_errors'][0].toString();
+                              _formKey.currentState!.validate();
+                            });
+                          });
+                        }
+                      }:null,
+                      label: Text( // Muestra el texto de la variable text dentro del boton
+                          t.login,
+                      ),
+                  ),
 
-            ],
+                  LogText(
+                    // Texto que ofrece crear una cuenta en caso de no tener
+                    press: () {
+                      Navigator.of(context).popAndPushNamed("/register");
+                    },
+                    login: true,
+                  ),
+
+                ],
+              ),
+            ),
           ),
         ),
       )

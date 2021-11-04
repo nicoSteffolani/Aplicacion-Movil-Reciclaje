@@ -19,12 +19,12 @@ Future<Token> getToken(UserLogin userLogin) async {
   );
   print("request made");
   if (response.statusCode == 200) {
-    print(response.body);
-    return Token.fromJson(json.decode(response.body));
+    print(utf8.decode(response.bodyBytes));
+    return Token.fromJson(json.decode(utf8.decode(response.bodyBytes)));
   } else {
     print(" Error ");
-    print(json.decode(response.body).toString());
-    throw Exception(json.decode(response.body));
+    print(json.decode(utf8.decode(response.bodyBytes)));
+    throw json.decode(utf8.decode(response.bodyBytes));
   }
 }
 final _registerEndpoint = "/api/register/";
@@ -43,10 +43,10 @@ Future<Map<String,dynamic>> postUser(UserRegister userRegister) async {
 
   print("request made ${userRegister.toDatabaseJson()}");
   if (response.statusCode == 201) {
-    print(response.body);
-    return json.decode(response.body);
+    print(utf8.decode(response.bodyBytes));
+    return json.decode(utf8.decode(response.bodyBytes));
   } else {
     print("error ${response.statusCode}");
-    throw json.decode(response.body);
+    throw json.decode(utf8.decode(response.bodyBytes));
   }
 }

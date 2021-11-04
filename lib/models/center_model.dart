@@ -1,10 +1,12 @@
+import 'package:ecoinclution_proyect/models/models.dart';
 import 'package:ecoinclution_proyect/models/place_model.dart';
+import 'package:flutter/material.dart';
 
 class CenterModel extends Place{
   final dynamic url;
-  final dynamic telefono;
-  final dynamic initTime;
-  final dynamic stopTime;
+  final dynamic telephone;
+  final TimeOfDay initTime;
+  final TimeOfDay stopTime;
   final dynamic verified;
 
 
@@ -14,41 +16,54 @@ class CenterModel extends Place{
     required name,
     required lat,
     required lng,
-    required recycleType,
-    required this.telefono,
+    required recyclingTypes,
+    required this.telephone,
     required this.initTime,
     required this.stopTime,
     required this.verified
 
-  }): super(id: id, name: name, lat: lat, lng: lng,recycleType: recycleType);
+  }): super(id: id, name: name, lat: lat, lng: lng,recyclingTypes: recyclingTypes);
 
-  factory CenterModel.fromJson(Map<String, dynamic> json) {
+  factory CenterModel.fromJson(Map<String, dynamic> json, {required List<RecyclingType> recyclingTypes}) {
+    List<RecyclingType> recyclingTypesFrom = [];
+    List<dynamic> recyclingTypesJson = json["tipo_de_reciclado"];
+    recyclingTypes.forEach((ele){
+      if (recyclingTypesJson.contains(ele.id)) {
+        recyclingTypesFrom.add(ele);
+      }
+    });
     return CenterModel(
       url: json['url'],
       id: json['id'],
       name: json['nombre'],
-      lat: json['lat'],
-      lng: json['long'],
-      recycleType: json['tipo_de_reciclado'],
-      telefono: json['telefono'],
-      initTime: json['horario_inicio'],
-      stopTime: json['horario_final'],
+      lat: double.parse(json['lat']),
+      lng: double.parse(json['long']),
+      recyclingTypes: recyclingTypesFrom,
+      telephone: json['telefono'],
+      initTime: TimeOfDay.fromDateTime(DateTime.parse("2021-01-01 ${json['horario_apertura']}")),
+      stopTime: TimeOfDay.fromDateTime(DateTime.parse("2021-01-01 ${json['horario_cierre']}")),
       verified: json['verificado'],
     );
   }
 
-  Map <String, dynamic> toDatabaseJson() => {
-    "url": this.url,
-    "id": this.id,
-    "nombre": this.name,
-    "lat": this.lat,
-    "long": this.lng,
-    "tipo_de_reciclado": this.recycleType,
-    "telefono": this.telefono,
-    "horarioInicio": this.initTime,
-    "horarioFinal": this.stopTime,
-    "verificado": this.verified,
-  };
+  Map <String, dynamic> toDatabaseJson() {
+    List<int> list = [];
+    recyclingTypes.forEach((element) {
+      list.add(element.id);
+    });
+    return {
+      "url": this.url,
+      "id": this.id,
+      "nombre": this.name,
+      "lat": this.lat,
+      "long": this.lng,
+      "tipo_de_reciclado": list,
+      "telefono": this.telephone,
+      "horarioInicio": this.initTime,
+      "horarioFinal": this.stopTime,
+      "verificado": this.verified,
+    };
+  }
 }
 
 

@@ -1,10 +1,11 @@
+import 'package:ecoinclution_proyect/models/models.dart';
 import 'package:ecoinclution_proyect/models/place_model.dart';
 
 class Point extends Place{
   final dynamic url;
   final dynamic center;
-  final dynamic tipoDeReciclado;
-  final dynamic intermediarys;
+  final dynamic stringRecyclingType;
+  final dynamic numIntermediaries;
 
 
   Point({
@@ -13,23 +14,36 @@ class Point extends Place{
     required name,
     required lat,
     required lng,
-    required recycleType,
+    required recyclingType,
     required this.center,
-    required this.tipoDeReciclado,
-    required this.intermediarys,
-  }) : super(id: id, name: name, lat: lat, lng: lng,recycleType: recycleType);
+    required this.stringRecyclingType,
+    required this.numIntermediaries,
+  }) : super(id: id, name: name, lat: lat, lng: lng,recyclingTypes: recyclingType);
 
-  factory Point.fromJson(Map<String, dynamic> json) {
+  factory Point.fromJson(Map<String, dynamic> json, {required List<RecyclingType> recyclingTypes, required List<CenterModel> centers}) {
+    late CenterModel center;
+    centers.forEach((ele){
+      if (json["centro"] == ele.id) {
+        center = ele;
+      }
+    });
+    List<RecyclingType> recyclingTypesFrom = [];
+    List<dynamic> recyclingTypesJson = json["tipo_de_reciclado"];
+    recyclingTypes.forEach((ele){
+      if (recyclingTypesJson.contains(ele.id)) {
+        recyclingTypesFrom.add(ele);
+      }
+    });
     return Point(
       url: json['url'],
       id: json['id'],
       name: json['nombre'],
-      lat: json['lat'],
-      lng: json['long'],
-      recycleType: json['tipo_de_reciclado'],
-      center: json['centro'],
-      tipoDeReciclado: json['getTiporeciclado'],
-      intermediarys: json['cant_intermediarios'],
+      lat: double.parse(json['lat']),
+      lng: double.parse(json['long']),
+      recyclingType: recyclingTypesFrom,
+      center: center,
+      stringRecyclingType: json['getTiporeciclado'],
+      numIntermediaries: json['cant_intermediarios'],
     );
   }
 }

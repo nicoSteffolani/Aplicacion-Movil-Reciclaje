@@ -1,14 +1,16 @@
 import 'package:ecoinclution_proyect/Constants.dart';
 import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? t = AppLocalizations.of(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome"),
+        title: Text(t!.welcomeTitle),
       ),
       body: Ventana(size: size),
     );
@@ -25,7 +27,9 @@ class Ventana extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? t = AppLocalizations.of(context);
     return Container(
+
       alignment: Alignment.center,
       child: SingleChildScrollView(
         child: Column(
@@ -38,18 +42,18 @@ class Ventana extends StatelessWidget {
             ),
             BotonCircular(
               // Boton de Login
-              text: "Login",
-              color: buttonColor,
-              textColor: textColor,
+              text: t!.login,
+              color:  Theme.of(context).primaryColor,
+              textColor:  Theme.of(context).buttonColor,
               press: () {
                 Navigator.of(context).pushNamed("/login");
               },
             ),
             BotonCircular(
               // Boton de registrarse
-              text: "Registrarse",
-              color: buttonColor,
-              textColor: textColor,
+              text: t.register,
+              color:  Theme.of(context).primaryColor,
+              textColor:  Theme.of(context).buttonColor,
               press: () {
                 Navigator.of(context).pushNamed("/register");
               },

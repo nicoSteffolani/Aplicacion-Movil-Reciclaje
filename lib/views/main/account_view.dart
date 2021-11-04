@@ -1,4 +1,4 @@
-import 'package:ecoinclution_proyect/global.dart' as g;
+import 'package:ecoinclution_proyect/models/models_manager.dart' as g;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -66,22 +66,19 @@ class Logout extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return AlertDialog(
-      title: ListTile(
-        title: Text("Cuidado",style: TextStyle(color: Theme.of(context).errorColor),),
-        leading: Icon(Icons.warning,color: Colors.red),
-      ),
+      title: Text("Cerrar cuenta"),
       content: Text("Estas seguro de que quieres cerrar la cuenta?",),
       actions: <Widget>[
         OutlinedButton( // Diseña el boton
-          child: Text("Aceptar",style: TextStyle(color: Theme.of(context).errorColor),),
+          child: Text("Cancelar"),
           onPressed: () {
-            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(false);
           },
         ),
         OutlinedButton( // Diseña el boton
-          child: Text("Cancelar",),
+          child: Text("Aceptar"),
           onPressed: () {
-            Navigator.of(context).pop(false);
+            Navigator.of(context).pop(true);
           },
         ),
       ],

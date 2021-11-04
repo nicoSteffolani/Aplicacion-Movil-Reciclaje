@@ -1,9 +1,11 @@
+import 'package:ecoinclution_proyect/models/models.dart';
+
 class Place {
   final dynamic id;
   final dynamic name;
-  final dynamic lat;
-  final dynamic lng;
-  final dynamic recycleType;
+  final double lat;
+  final double lng;
+  final List<RecyclingType> recyclingTypes;
 
 
   Place({
@@ -11,17 +13,25 @@ class Place {
     required this.name,
     required this.lat,
     required this.lng,
-    required this.recycleType,
+    required this.recyclingTypes,
 
-  });
+  }) : assert(id > 0),
+        assert(name.isNotEmpty);
 
-  factory Place.fromJson(Map<String, dynamic> json) {
+  factory Place.fromJson(Map<String, dynamic> json, {required List<RecyclingType> recyclingTypes}) {
+    List<RecyclingType> recyclingTypesFrom = [];
+    List<dynamic> recyclingTypesJson = json["tipo_de_reciclado"];
+    recyclingTypes.forEach((ele){
+      if (recyclingTypesJson.contains(ele.id)) {
+        recyclingTypesFrom.add(ele);
+      }
+    });
     return Place(
       id: json['id'],
       name: json['nombre'],
-      lat: json['lat'],
-      lng: json['long'],
-      recycleType: json['tipo_de_reciclado'],
+      lat: double.parse(json['lat']),
+      lng: double.parse(json['long']),
+      recyclingTypes: recyclingTypesFrom,
     );
   }
 }

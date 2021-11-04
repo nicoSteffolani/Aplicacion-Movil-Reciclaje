@@ -1,16 +1,11 @@
 import 'dart:convert';
 import 'package:ecoinclution_proyect/models/deposit_model.dart';
+import 'package:ecoinclution_proyect/models/models.dart';
+import 'package:ecoinclution_proyect/repository/user_repository.dart';
 import 'package:http/http.dart' as http;
-import 'package:ecoinclution_proyect/models/auth/user_model.dart';
-import 'package:ecoinclution_proyect/global.dart' as g;
 
-Future<List<Deposit>> fetchDeposits() async {
-  User user;
-  try{
-    user = await g.userRepository.getUser(id: 0);
-  }catch (e){
-    throw Exception('The user does not exist ');
-  }
+Future<List<Deposit>> fetchDeposits({required List<RecyclingType> recyclingTypes, required List<Place> places,required User user}) async {
+
   final response = await http.get(
     Uri.parse('http://ecoinclusion.herokuapp.com/api/depositos/'),
     headers: <String, String>{
@@ -28,12 +23,15 @@ Future<List<Deposit>> fetchDeposits() async {
     List<dynamic> listMap ;
     List<Deposit> list = [];
     try{
-      listMap = jsonDecode(response.body);
+      listMap = jsonDecode(utf8.decode(response.bodyBytes));
 
       listMap.forEach((row) {
-
-        Deposit deposit = Deposit.fromJson(row);
-        list.add(deposit);
+        try{
+          Deposit deposit = Deposit.fromJson(row, places: places,recyclingTypes: recyclingTypes);
+          list.add(deposit);
+        }catch (e){
+          print("deposits error  $e");
+        }
       });
     } catch (e) {
       throw Exception("cant decode body. " + e.toString());
@@ -42,13 +40,14 @@ Future<List<Deposit>> fetchDeposits() async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('error on making request. ' + response.body);
+    throw Exception('error on making request. ' + utf8.decode(response.bodyBytes));
   }
 }
 
 Future<void> deleteDeposit(Deposit deposit) async {
+  UserRepository userRepository = UserRepository();
   User user = User();
-  await g.userRepository.getUser(id: 0).then((value) {
+  await userRepository.getUser(id: 0).then((value) {
     print("ok");
     user = value;
   }, onError: (error) {
@@ -68,12 +67,13 @@ Future<void> deleteDeposit(Deposit deposit) async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Error making request. ' + response.body);
+    throw Exception('Error making request. ' + utf8.decode(response.bodyBytes));
   }
 }
-Future<Deposit> createDeposit(Deposit deposit) async {
+Future<Deposit> createDeposit(Deposit deposit,{required List<RecyclingType> recyclingTypes, required List<Place> places}) async {
+  UserRepository userRepository = UserRepository();
   User user = User();
-  await g.userRepository.getUser(id: 0).then((value) {
+  await userRepository.getUser(id: 0).then((value) {
     print("ok");
     user = value;
   }, onError: (error) {
@@ -97,8 +97,8 @@ Future<Deposit> createDeposit(Deposit deposit) async {
     // then parse the JSON.
     Deposit deposit;
     try{
-      Map<String, dynamic> map = jsonDecode(response.body);
-      deposit = Deposit.fromJson(map);
+      Map<String, dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
+      deposit = Deposit.fromJson(map, places: places,recyclingTypes: recyclingTypes);
     } catch (e) {
       throw Exception("cant decode body. " + e.toString());
     }
@@ -108,12 +108,13 @@ Future<Deposit> createDeposit(Deposit deposit) async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('error on making request. ' + response.body);
+    throw Exception('error on making request. ' + utf8.decode(response.bodyBytes));
   }
 }
-Future<Deposit> editDeposit(Deposit deposit) async {
+Future<Deposit> editDeposit(Deposit deposit,{required List<RecyclingType> recyclingTypes, required List<Place> places}) async {
+  UserRepository userRepository = UserRepository();
   User user = User();
-  await g.userRepository.getUser(id: 0).then((value) {
+  await userRepository.getUser(id: 0).then((value) {
     print("ok");
     user = value;
   }, onError: (error) {
@@ -137,8 +138,8 @@ Future<Deposit> editDeposit(Deposit deposit) async {
     // then parse the JSON.
     Deposit deposit;
     try{
-      Map<String, dynamic> map = jsonDecode(response.body);
-      deposit = Deposit.fromJson(map);
+      Map<String, dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
+      deposit = Deposit.fromJson(map, places: places,recyclingTypes: recyclingTypes);
     } catch (e) {
       throw Exception("cant decode body. " + e.toString());
     }
@@ -148,6 +149,6 @@ Future<Deposit> editDeposit(Deposit deposit) async {
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('error on making request. ' + response.body);
+    throw Exception('error on making request. ' + utf8.decode(response.bodyBytes));
   }
 }

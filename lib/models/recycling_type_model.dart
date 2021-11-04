@@ -1,16 +1,16 @@
-class RecycleType {
+class RecyclingType {
   final dynamic id;
   final dynamic name;
 
 
-  RecycleType({
+  RecyclingType({
     required this.id,
     required this.name,
 
   });
 
-  factory RecycleType.fromJson(Map<String, dynamic> json) {
-    return RecycleType(
+  factory RecyclingType.fromJson(Map<String, dynamic> json) {
+    return RecyclingType(
       id: json['id'],
       name: json['nombre'],
     );

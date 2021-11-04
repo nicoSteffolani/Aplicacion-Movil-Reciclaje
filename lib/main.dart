@@ -1,24 +1,25 @@
+import 'package:ecoinclution_proyect/repository/user_repository.dart';
 import 'package:ecoinclution_proyect/routes/route_generator.dart';
 import 'package:ecoinclution_proyect/themes/themes.dart';
 import 'package:ecoinclution_proyect/views/main/tabs_view.dart';
 import 'package:ecoinclution_proyect/views/views.dart';
 import 'package:ecoinclution_proyect/views/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/global.dart' as g;
+import 'package:provider/provider.dart';
 import 'package:theme_mode_handler/theme_mode_handler.dart';
-
-
-
+import 'models/models_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 void main() {
-  runApp(MyApp());
-  g.userRepository.hasToken(id: 0).then((value) {
-    if (value){
-      g.models.updateAll();
-    }
-    
-  });
-  
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ModelsManager()),
+
+        ],
+        child: MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -27,6 +28,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
+  UserRepository userRepository = UserRepository();
   @override
   void initState() {
     super.initState();
@@ -41,15 +43,22 @@ class _MyApp extends State<MyApp> {
       ),
       builder: (ThemeMode themeMode){
         return MaterialApp(
-          title: 'Depositos Ecoinclution',
+          debugShowCheckedModeBanner: false,
+          onGenerateTitle: (context){
+            AppLocalizations? t = AppLocalizations.of(context);
+            return t!.welcomeTitle;
+          },
+          title: 'EcoCordoba',
           theme: CustomTheme.lightTheme,
           highContrastTheme: CustomTheme.lightTheme,
           darkTheme: CustomTheme.darkTheme,
           themeMode: themeMode,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           initialRoute: "/",
           onGenerateRoute: RouteGenerator.generateRoute,
           home: FutureBuilder<bool>(
-              future: g.userRepository.hasToken(id: 0),
+              future: userRepository.hasToken(id: 0),
               builder: (context,snapshot) {
                 if (snapshot.hasData){
                   if (snapshot.data!){
@@ -58,7 +67,14 @@ class _MyApp extends State<MyApp> {
                     return WelcomePage();
                   }
                 }
-                return LoadingPage();
+                return Align(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    "assets/gifs/loading.gif",
+                    width: 200, // con estas proporciones
+                    height: 200,
+                  ),
+                );
               }
           ),
         );

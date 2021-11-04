@@ -1,48 +1,59 @@
 import 'package:ecoinclution_proyect/api_connection/apis.dart';
-import 'package:ecoinclution_proyect/global.dart' as g;
 import 'package:ecoinclution_proyect/models/models.dart';
+import 'package:ecoinclution_proyect/models/models_manager.dart';
 import 'package:ecoinclution_proyect/models/place_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:provider/provider.dart';
 
 class EditDepositPage extends StatefulWidget {
-  final Deposit? deposit;
   final bool create;
 
   const EditDepositPage({Key? key,
-    required this.create,this.deposit,
+    required this.create
   }): super(key: key);
 
   @override
   _EditDepositPageState createState() => _EditDepositPageState();
 }
 class _EditDepositPageState extends State<EditDepositPage> {
+  late ModelsManager mm;
 
   @override
   initState() {
-    if (this.widget.deposit != null){
-      if (this.widget.deposit!.date != null){
-        List<String> date = this.widget.deposit!.date.toString().split("-");
-        _date = DateTime(int.parse(date[0]), int.parse(date[1]), int.parse(date[2]));
+    super.initState();
+    mm = context.read<ModelsManager>();
+    try{
+      
+      mm.places.forEach((place){
+        if (mm.selectedDeposit.place.id == place.id){
+          _selectedPlace = place;
+        }
+      });
+    }catch(e){
+      print("Error in selected place $e");
+    }
+    if (!widget.create) {
+
+      if (mm.selectedDeposit.date != null) {
+        List<String> date = mm.selectedDeposit.date.toString().split("-");
+        _date = DateTime(
+            int.parse(date[0]), int.parse(date[1]), int.parse(date[2]));
       }
 
-      _selectedPlace = this.widget.deposit!.place;
-      _selectedRecycleType = this.widget.deposit!.recycleType;
+      _selectedPlace = mm.selectedDeposit.place;
+      _selectedRecycleType = mm.selectedDeposit.recyclingType;
 
     }
-    super.initState();
   }
 
 
   final _formKey = GlobalKey<FormState>();
   DateTime _date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1);
-  Object? _selectedPlace;
+  Place? _selectedPlace;
   TextEditingController amountController = TextEditingController();
   TextEditingController weightController = TextEditingController();
-  Object? _selectedRecycleType;
-  List<RecycleType> _listOfTypes = [];
-  List<Place> _listOfPlaces = [];
+  RecyclingType? _selectedRecycleType;
 
   final dateCtl = TextEditingController();
   Widget getRecycleTypes(){
@@ -50,27 +61,7 @@ class _EditDepositPageState extends State<EditDepositPage> {
     if (_selectedPlace == null){
       return Text("Para seleccionar un tipo de reclado debe elegir un lugar.");
     }
-    Place? place;
-    g.models.points.forEach((element){
-      if (element.id == _selectedPlace){
-        place = Place(id: element.id, name: element.name,lat: element.lat,lng: element.lng,recycleType:element.recycleType);
-      }
-    });
-    if (place == null){
-      g.models.centers.forEach((element){
-        if (element.id == _selectedPlace){
-          place = Place(id: element.id, name: element.name,lat: element.lat,lng: element.lng,recycleType:element.recycleType);
-        }
-      });
-    }
-    _listOfTypes = [];
-    place!.recycleType.forEach((element){
-      g.models.types.forEach((type){
-        if (type.id == element){
-          _listOfTypes.add(type);
-        }
-      });
-    });
+
 
     return DropdownButtonFormField(
       value: _selectedRecycleType,
@@ -85,18 +76,18 @@ class _EditDepositPageState extends State<EditDepositPage> {
       isExpanded: true,
       onChanged: (value) {
         setState(() {
-          _selectedRecycleType = value;
+          _selectedRecycleType = value as RecyclingType;
         });
       },
       onSaved: (value) {
         setState(() {
-          _selectedRecycleType = value;
+          _selectedRecycleType = value as RecyclingType;
         });
       },
-      items: _listOfTypes
+      items: _selectedPlace!.recyclingTypes
           .map((val) {
         return DropdownMenuItem(
-          value: val.id,
+          value: val,
           child: Text(
             val.name,
           ),
@@ -106,19 +97,11 @@ class _EditDepositPageState extends State<EditDepositPage> {
   }
   @override
   Widget build(BuildContext context) {
-    _listOfPlaces = [];
-    List<dynamic> centerList = g.models.centers ;
-    List<dynamic> pointList = g.models.points ;
-    centerList.forEach((place){
-      _listOfPlaces.add(Place(id: place.id, name: place.name,lat: place.lat,lng: place.lng,recycleType:place.recycleType));
-    });
-    pointList.forEach((place){
-      _listOfPlaces.add(Place(id: place.id, name: place.name,lat: place.lat,lng: place.lng,recycleType:place.recycleType));
-    });
+    mm = context.watch<ModelsManager>();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("${(widget.create)? 'Nuevo Deposito':'Editar Deposito N°${widget.deposit!.id}'}"),
+        title: Text("${(widget.create)? 'Nuevo Deposito':'Editar Deposito N°${mm.selectedDeposit.id}'}"),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -140,27 +123,26 @@ class _EditDepositPageState extends State<EditDepositPage> {
                 }
                 if (widget.create) {
 
-                  createDeposit(Deposit(id: 0,place: _selectedPlace,amount: amountController.text,weight: weightController.text,recycleType: _selectedRecycleType,date:formatDate(_date))).then((deposit){
+                  createDeposit(Deposit(id: 0,place: _selectedPlace!,amount: amountController.text,weight: weightController.text,recyclingType: _selectedRecycleType!,date:formatDate(_date)),places:mm.places,recyclingTypes:mm.recyclingTypes).then((deposit){
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Deposito Creado.')),
                     );
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/deposits', (Route<dynamic> route) => false);
+                    Navigator.of(context).pop();
+                    mm.updateAll();
                   });
                 }else{
                   print("intentando");
-                  widget.deposit!.date = formatDate(_date);
-                  widget.deposit!.place = _selectedPlace;
-                  widget.deposit!.place = _selectedRecycleType;
-                  widget.deposit!.amount = amountController.text;
-                  widget.deposit!.weight = weightController.text;
-                  editDeposit(widget.deposit!).then((deposit){
-
+                  mm.selectedDeposit.date = formatDate(_date);
+                  mm.selectedDeposit.place = _selectedPlace!;
+                  mm.selectedDeposit.recyclingType = _selectedRecycleType!;
+                  mm.selectedDeposit.amount = amountController.text;
+                  mm.selectedDeposit.weight = weightController.text;
+                  editDeposit(mm.selectedDeposit,places: mm.places, recyclingTypes: mm.recyclingTypes).then((deposit){
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Deposito editado.')),
                     );
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/deposits', (Route<dynamic> route) => false);
+                    Navigator.of(context).pop();
+                    mm.updateAll();
                   });
                 }
               }
@@ -169,7 +151,7 @@ class _EditDepositPageState extends State<EditDepositPage> {
         ],
 
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
@@ -212,18 +194,30 @@ class _EditDepositPageState extends State<EditDepositPage> {
                   isExpanded: true,
                   onChanged: (value) {
                     setState(() {
-                      _selectedPlace = value;
+                      _selectedPlace = value as Place;
+                      try {
+                        _selectedRecycleType = _selectedPlace!.recyclingTypes
+                            .first;
+                      }catch (e){
+                        _selectedRecycleType = null;
+                      }
                     });
                   },
                   onSaved: (value) {
                     setState(() {
-                      _selectedPlace = value;
+                      _selectedPlace = value as Place;
+                      try {
+                        _selectedRecycleType = _selectedPlace!.recyclingTypes
+                            .first;
+                      }catch (e){
+                        _selectedRecycleType = null;
+                      }
                     });
                   },
-                  items: _listOfPlaces
+                  items: mm.places
                       .map((val) {
                     return DropdownMenuItem(
-                      value: val.id,
+                      value: val,
                       child: Text(
                         val.name,
                       ),
@@ -238,7 +232,7 @@ class _EditDepositPageState extends State<EditDepositPage> {
               ListTile(
                 leading: const Icon(IconData(0xe902,fontFamily: 'custom')),
                 title: TextFormField(
-                    controller: amountController..text = '${(widget.deposit == null) ? amountController.text: (widget.deposit!.amount == null) ? amountController.text: widget.deposit!.amount}',
+                    controller: amountController..text = '${(widget.create) ? amountController.text: (mm.selectedDeposit.amount == null) ? amountController.text: mm.selectedDeposit.amount}',
                     keyboardType: TextInputType.number,
                     validator:(val){
                       if(val != null && val != "" ) {
@@ -271,7 +265,7 @@ class _EditDepositPageState extends State<EditDepositPage> {
                       }
                     }
                   },
-                  controller: weightController..text = '${(widget.deposit == null) ? weightController.text: (widget.deposit!.weight == null) ? weightController.text: widget.deposit!.weight}',
+                  controller: weightController..text = '${(widget.create) ? weightController.text: (mm.selectedDeposit.weight == null) ? weightController.text: mm.selectedDeposit.weight}',
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: "Peso total(Kg, opcional): ",

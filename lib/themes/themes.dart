@@ -1,6 +1,6 @@
 import 'package:ecoinclution_proyect/models/auth/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/global.dart' as g;
+import 'package:ecoinclution_proyect/models/models_manager.dart' as g;
 import 'package:theme_mode_handler/theme_mode_manager_interface.dart';
 
 CustomTheme currentTheme = CustomTheme();
@@ -12,8 +12,11 @@ class CustomTheme extends ChangeNotifier{
       accentColor: Color(0xFFFDFD72),
       brightness: Brightness.light,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        showUnselectedLabels: false,
-        showSelectedLabels: true,
+        selectedIconTheme: IconThemeData(
+          size: 35,
+        ),
+        showUnselectedLabels: true,
+        showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Color(0xFFFFFFFF),
         unselectedItemColor: Color(0xFFFFFFFF).withOpacity(0.38),
@@ -27,8 +30,11 @@ class CustomTheme extends ChangeNotifier{
       accentColor: Color(0xFFC7B801),
       brightness: Brightness.dark,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        showUnselectedLabels: false,
-        showSelectedLabels: true,
+        selectedIconTheme: IconThemeData(
+          size: 35,
+        ),
+        showUnselectedLabels: true,
+        showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Color(0xFFFFFFFF),
         unselectedItemColor: Color(0xFFFFFFFF).withOpacity(0.38),

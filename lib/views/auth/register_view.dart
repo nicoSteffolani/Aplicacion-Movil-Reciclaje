@@ -1,9 +1,9 @@
-import 'package:ecoinclution_proyect/my_widgets/buttons/BotonRedondeadoInicio.dart';
+import 'package:ecoinclution_proyect/models/models_manager.dart';
 import 'package:ecoinclution_proyect/my_widgets/login/RecomendText.dart';
-import 'package:ecoinclution_proyect/my_widgets/text/textImput.dart';
+import 'package:ecoinclution_proyect/repository/user_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:ecoinclution_proyect/Constants.dart';
-import 'package:ecoinclution_proyect/global.dart' as g;
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -11,7 +11,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
 
+  UserRepository userRepository = UserRepository();
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final firstNameController = TextEditingController();
@@ -27,164 +29,205 @@ class _RegisterPageState extends State<RegisterPage> {
   String _errorPassword = "";
   String _errorPassword2 = "";
 
+  bool loading = false;
+  late ModelsManager mm;
+
+  @override
+  initState() {
+    super.initState();
+    mm = context.read<ModelsManager>();
+  }
 
   @override
   Widget build(BuildContext context) {
+    mm = context.watch<ModelsManager>();
+    loading = false;
+    if(mm.modelsStatus == ModelsStatus.updating){
+      loading = true;
+    }
+    AppLocalizations? t = AppLocalizations.of(context);
     // Constructor de la ventana Login
     return Scaffold(
         appBar: AppBar(
-          title: Text("Register"),
-
+          title: Text(t!.register),
         ),
-        body:Container(
-          // Se coloca dentro de un container para poder centrarla
-
-          child: SingleChildScrollView(
-            // Al colocarla dentro se evita problemas con la vista en caso de que se gire la pantalla
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  // Titutlo de la ventana
-                  margin: EdgeInsets.symmetric(vertical: 30),
-                  child: Text(
-                    "Resgistrarse",
+        body:SingleChildScrollView(
+          // Al colocarla dentro se evita problemas con la vista en caso de que se gire la pantalla
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    t.register,
                     style: Theme.of(context).textTheme.headline4,
                   ),
-                ),
-                InputText(
-                  // Espacio para ingrasar el nombre de usuario
-                  text: "Nombre de Usuario",
-                  typePassword: false,
-                  textEditingController: usernameController,
-                  iconData: Icons.person,
-                ),
-                Text(
-                  _errorUsername,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                InputText(
-                  // Espacio para ingrasar el mail
-                  text: "Email",
-                  typePassword: false,
-                  textEditingController: emailController,
-                  iconData: Icons.mail_outline_sharp,
-                ),
-                Text(
-                  _errorEmail,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                InputText(
-                  // Espacio para ingrasar la contraseña
-                  text: "Nombre",
-                  typePassword: false,
-                  textEditingController: firstNameController,
-                  iconData: Icons.perm_contact_cal,
-                ),
-                Text(
-                  _errorFirstName,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                InputText(
-                  // Espacio para ingrasar la contraseña
-                  text: "Apellido",
-                  typePassword: false,
-                  textEditingController: lastNameController,
-                  iconData: Icons.perm_contact_cal,
-                ),
-                Text(
-                  _errorLastName,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                Text(
-                  _errorEmail,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                //mail
-                InputText(
-                  // Espacio para ingrasar la contraseña
-                  text: "Contraseña",
-                  typePassword: true,
-                  textEditingController: passwordController,
-                ),
-                Text(
-                  _errorPassword,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                InputText(
-                  // Espacio para ingrasar la contraseña
-                  text: "Comprobar contraseña",
-                  typePassword: true,
-                  textEditingController: password2Controller,
-                ),
-                Text(
-                  _errorPassword2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red),
-                ),
-                BotonCircular(
-                  // Boton para validar los datos
-                  color: buttonColor,
-                  textColor: textColor,
-                  text: "Ingresar",
-                  press: () {
-                    g.userRepository.registerUser(username: usernameController.text, email: emailController.text, firstName: firstNameController.text, lastName: lastNameController.text, password: passwordController.text, password2: password2Controller.text).then((value) async {
-                      print(value);
-                      await g.userRepository
-                          .authenticateUser(username: usernameController.text, password: passwordController.text)
-                          .then((value) {
-                        print("ok");
-                        g.userRepository.persistToken(user: value);
-                        Navigator.of(context)
-                            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                  TextFormField(
+                    enabled: (!loading),
+                      validator:(val){
+                        if(val == null || val == "" ) {
+                          return t.required;
+                        }
+                        if (_errorUsername != ''){
+                          return _errorUsername;
+                        }
+                      },
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        labelText: t.username,
+                        hintText: t.username,
+                        icon: Icon(Icons.person),
+                      )
+                  ),
+                  TextFormField(
+                      enabled: (!loading),
+                      validator:(val){
+                        if(val == null || val == "" ) {
+                          return t.required;
+                        }
+                        if (_errorEmail != ''){
+                          return _errorEmail;
+                        }
+                      },
+                      controller: emailController,
 
-                      }, onError: (error) {
-                        print(error);
-                      });
+                      decoration: InputDecoration(
+                        labelText: t.email,
+                        hintText: t.email,
+                        icon: Icon(Icons.email),
+                      )
+                  ),
+                  TextFormField(
+                      enabled: (!loading),
+                      validator:(val){
+                        if (_errorFirstName != '') {
+                          return _errorFirstName;
+                        }
 
-                    },onError: (error){
-                      print(error);
+                      },
+                      controller: firstNameController,
+
+                      decoration: InputDecoration(
+                        labelText: t.firstName,
+                        hintText: t.firstName,
+                        icon: Icon(Icons.person_pin_sharp),
+                      )
+                  ),
+                  TextFormField(
+                      enabled: (!loading),
+                      validator:(val){
+                        if (_errorLastName != '') {
+                          return _errorLastName;
+                        }
+                      },
+                      controller: lastNameController,
+                      decoration: InputDecoration(
+                        labelText: t.lastName,
+                        hintText: t.lastName,
+                        icon: Icon(Icons.person_pin_sharp),
+                      )
+                  ),
+                  TextFormField(
+                      enabled: (!loading),
+                      validator:(val){
+                        if(val == null || val == "" ) {
+                          return t.required;
+                        }
+                        if (_errorPassword != '') {
+                          return _errorPassword;
+                        }
+                      },
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: t.password,
+                        hintText: t.password,
+                        icon: Icon(Icons.vpn_key_sharp),
+                      )
+                  ),
+                  TextFormField(
+                      enabled: (!loading),
+                      validator:(val){
+                        if(val == null || val == "" ) {
+                          return t.required;
+                        }
+                        if (_errorPassword2 != '') {
+                          return _errorPassword2;
+                        }
+                      },
+                      controller: password2Controller,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: t.password2,
+                        hintText: t.password2,
+                        icon: Icon(Icons.vpn_key_sharp),
+                      )
+                  ),
+                  Container(height:16),
+                  ElevatedButton.icon(
+                    icon: (loading)? CircularProgressIndicator(): Container(),
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).accentColor,
+
+                    ),
+                    autofocus: true,
+                    onPressed: (!loading)?() {
                       setState(() {
-                        _errorUsername = (error['username'].toString() == "null")? "": error['username'].toString();
-                        _errorEmail = (error['email'].toString() == "null")? "": error['email'].toString();
-                        _errorFirstName = (error['first_name'].toString() == "null")? "": error['first_name'].toString();
-                        _errorLastName = (error['last_name'].toString() == "null")? "": error['last_name'].toString();
-                        _errorPassword = (error['password'].toString() == "null")? "": error['password'].toString();
-                        _errorPassword2 = (error['password2'].toString() == "null")? "": error['password2'].toString();
+                        _errorUsername = "";
+                        _errorEmail = "";
+                        _errorFirstName = "";
+                        _errorLastName = "";
+                        _errorPassword = "";
+                        _errorPassword2 = "";
                       });
-                    });
-                  },
-                ),
+                      if (_formKey.currentState!.validate()) {
 
-                LogText(
-                  // Texto que ofrece crear una cuenta en caso de no tener
-                  press: () {
-                    Navigator.of(context).popAndPushNamed("/login");
-                  },
-                  login: false,
-                ),
+                        mm.registerUser(username: usernameController.text, email: emailController.text, firstName: firstNameController.text, lastName: lastNameController.text, password: passwordController.text, password2: password2Controller.text).then((value) async {
 
-              ],
+                          await mm
+                              .authenticateUser(username: usernameController.text, password: passwordController.text)
+                              .then((value) {
+                            userRepository.persistToken(user: value);
+                            Navigator.of(context)
+                                .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+
+                          }, onError: (error) {
+                            print(error);
+                          });
+
+
+                        },onError: (error){
+                          print(error);
+                          setState(() {
+                            _errorUsername = (error['username'].toString() == "null")? "": error['username'][0].toString();
+                            _errorEmail = (error['email'].toString() == "null")? "": error['email'][0].toString();
+                            _errorFirstName = (error['first_name'].toString() == "null")? "": error['first_name'][0].toString();
+                            _errorLastName = (error['last_name'].toString() == "null")? "": error['last_name'][0].toString();
+                            _errorPassword = (error['password'].toString() == "null")? "": error['password'][0].toString();
+                            _errorPassword2 = (error['password2'].toString() == "null")? "": error['password2'][0].toString();
+                            _formKey.currentState!.validate();
+                          });
+                        });
+                      }
+
+                    }:null,
+                    label: Text( // Muestra el texto de la variable text dentro del boton
+                      t.register,
+                    ),
+                  ),
+
+                  LogText(
+                    // Texto que ofrece crear una cuenta en caso de no tener
+                    press: () {
+                      Navigator.of(context).popAndPushNamed("/login");
+                    },
+                    login: false,
+                  ),
+
+                ],
+              ),
             ),
           ),
         )
