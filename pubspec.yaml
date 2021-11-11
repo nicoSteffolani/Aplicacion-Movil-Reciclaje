@@ -36,6 +36,10 @@ dependencies:
   fluttertoast: ^8.0.8
   theme_mode_handler: ^3.0.0
   location: ^4.3.0
+  flutter_local_notifications: ^9.0.0
+  timezone: ^0.8.0
+  flutter_native_timezone: ^2.0.0
+
   google_maps_flutter: ^2.0.9
   provider: ^6.0.1
 

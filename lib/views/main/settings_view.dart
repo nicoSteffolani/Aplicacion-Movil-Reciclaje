@@ -1,3 +1,4 @@
+import 'package:ecoinclution_proyect/my_widgets/notifications/_notification_service.dart';
 import 'package:ecoinclution_proyect/models/models_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final themeMode = ThemeModeHandler.of(context)?.themeMode;
+    final notification = NotificationApi();
     return Scaffold(
       appBar: AppBar(
         title: Text("Configuracion"),
@@ -29,45 +31,46 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
 
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListTile(
-              title: Text("${mm.user!.username}"),
+          child: Column(
+            children: [
+              ListTile(
+                title: Text("${mm.user!.username}"),
 
-              leading: Icon(Icons.person),
-            ),
-            Divider(),
-            ListTile(
-              title: Text("Cuenta"),
-              subtitle: Text("Seguridad, Cambiar contraseña, Cerrar cuenta, Eliminar Cuenta"), // TODO hacer manejo de cuenta
-              leading: Icon(Icons.vpn_key),
-              onTap: (){
-                Navigator.of(context).pushNamed("/account");
-              },
-            ),
-            ListTile(
-              title: Text("Tema"),
-              subtitle: Text("Actual: ${themeMode.toString().replaceFirst(RegExp(r'ThemeMode.'), "")}, Toca para cambiar"), // TODO hacer manejo de cuenta
-              leading: Icon(Icons.brightness_4_rounded),
-              onTap: () {
-                _selectThemeMode(context).then((theme){
-                  setState(() {
+                leading: Icon(Icons.person),
+              ),
+              Divider(),
+              ListTile(
+                title: Text("Cuenta"),
+                subtitle: Text("Seguridad, Cambiar contraseña, Cerrar cuenta, Eliminar Cuenta"), // TODO hacer manejo de cuenta
+                leading: Icon(Icons.vpn_key),
+                onTap: (){
+                  Navigator.of(context).pushNamed("/account");
+                },
+              ),
+              ListTile(
+                title: Text("Tema"),
+                subtitle: Text("Actual: ${themeMode.toString().replaceFirst(RegExp(r'ThemeMode.'), "")}, Toca para cambiar"), // TODO hacer manejo de cuenta
+                leading: Icon(Icons.brightness_4_rounded),
+                onTap: () {
+                  _selectThemeMode(context).then((theme){
+                    setState(() {
+                    });
                   });
-                });
-              },
-            ),
-            ListTile(
-              title: Text("Notificaciones"),
-              subtitle: Text("Tonos de mensajes, Cuando mostrar notificacion"),// TODO hacer manejo de notificaciones
-              leading: Icon(Icons.notifications_rounded),
-            ),
-            ListTile(
-              title: Text("Ayuda"),
-              subtitle: Text("Centro de ayuda, Reportar bugs"),// TODO hacer manejo de notificaciones
-              leading: Icon(Icons.help_outline),
-            ),
-          ],
-        )
+                },
+              ),
+              ListTile(
+                title: Text("Notificaciones"),
+                subtitle: Text("Tonos de mensajes, Cuando mostrar notificacion"),// TODO hacer manejo de notificaciones
+                leading: Icon(Icons.notifications_rounded),
+                onTap: () {notification.commonNotifications(0, "Hola, ", "Esto es una notificacion muy fachera");},
+              ),
+              ListTile(
+                title: Text("Ayuda"),
+                subtitle: Text("Centro de ayuda, Reportar bugs"),// TODO hacer manejo de notificaciones
+                leading: Icon(Icons.help_outline),
+              ),
+            ],
+          )
       ),
     );
   }

@@ -34,7 +34,7 @@ Future<List<Deposit>> fetchDeposits({required List<RecyclingType> recyclingTypes
         }
       });
     } catch (e) {
-      throw Exception("cant decode body. " + e.toString());
+      throw Exception("cant decode body. /deposit_api/ " + e.toString());
     }
     return list;
   } else {
@@ -51,7 +51,7 @@ Future<void> deleteDeposit(Deposit deposit) async {
     print("ok");
     user = value;
   }, onError: (error) {
-    throw Exception('Failed to get user. ' + error);
+    throw Exception('Failed to get user. /deposit_api/ ' + error);
   });
   final response = await http.delete(
     Uri.parse('http://ecoinclusion.herokuapp.com/api/depositos/${deposit.id}/'),
@@ -77,7 +77,7 @@ Future<Deposit> createDeposit(Deposit deposit,{required List<RecyclingType> recy
     print("ok");
     user = value;
   }, onError: (error) {
-    throw Exception('Failed to get user. ' + error);
+    throw Exception('Failed to get user. /deposit_api/ ' + error);
   });
   print(deposit.toDatabaseJson());
   final response = await http.post(
@@ -100,7 +100,7 @@ Future<Deposit> createDeposit(Deposit deposit,{required List<RecyclingType> recy
       Map<String, dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
       deposit = Deposit.fromJson(map, places: places,recyclingTypes: recyclingTypes);
     } catch (e) {
-      throw Exception("cant decode body. " + e.toString());
+      throw Exception("cant decode body. /deposit_api/ " + e.toString());
     }
 
 
@@ -118,7 +118,7 @@ Future<Deposit> editDeposit(Deposit deposit,{required List<RecyclingType> recycl
     print("ok");
     user = value;
   }, onError: (error) {
-    throw Exception('Failed to get user. ' + error);
+    throw Exception('Failed to get user. /deposit_api/ ' + error);
   });
   print(deposit.toDatabaseJson());
   final response = await http.put(
@@ -141,7 +141,7 @@ Future<Deposit> editDeposit(Deposit deposit,{required List<RecyclingType> recycl
       Map<String, dynamic> map = jsonDecode(utf8.decode(response.bodyBytes));
       deposit = Deposit.fromJson(map, places: places,recyclingTypes: recyclingTypes);
     } catch (e) {
-      throw Exception("cant decode body. " + e.toString());
+      throw Exception("cant decode body. /deposit_api/ " + e.toString());
     }
 
 
