@@ -72,7 +72,7 @@ Future<List<Point>> filterPointsByPosition( {required List<RecyclingType> recycl
         }
       });
     } catch (e) {
-      throw Exception("cant decode body. " + e.toString());
+      throw Exception("cant decode body. /point_api/" + e.toString());
     }
     return list;
   } else {

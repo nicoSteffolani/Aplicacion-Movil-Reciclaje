@@ -7,9 +7,9 @@ CustomTheme currentTheme = CustomTheme();
 
 class CustomTheme extends ChangeNotifier{
   static ThemeData get lightTheme {
-    return ThemeData(
+    final lightTheme = ThemeData(
       primaryColor: Color(0xFF4CAE50),
-      accentColor: Color(0xFFFDFD72),
+      // accentColor: Color(0xFFFDFD72),
       brightness: Brightness.light,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedIconTheme: IconThemeData(
@@ -23,11 +23,12 @@ class CustomTheme extends ChangeNotifier{
         backgroundColor: Color(0xFF4CAE50),
       ),
     );
+    lightTheme.copyWith(colorScheme: lightTheme.colorScheme.copyWith(secondary: Color(0xFFFDFD72)));
+    return lightTheme;
   }
   static ThemeData get darkTheme {
-    return ThemeData(
+    final darkTheme = ThemeData(
       primaryColor: Color(0xFF087E23),
-      accentColor: Color(0xFFC7B801),
       brightness: Brightness.dark,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedIconTheme: IconThemeData(
@@ -41,6 +42,8 @@ class CustomTheme extends ChangeNotifier{
         backgroundColor: Color(0xFF087E23),
       ),
     );
+    darkTheme.copyWith(colorScheme: darkTheme.colorScheme.copyWith(secondary: Color(0xFFC7B801)));
+    return darkTheme;
   }
 }
 class MyManager implements IThemeModeManager {
@@ -51,7 +54,7 @@ class MyManager implements IThemeModeManager {
     if (hasToken){
       User user = await g.userRepository.getUser(id: 0);
       print("theme mode: ${user.theme}");
-      print("paso por aca");
+      print("paso por aca /themes/");
       theme = user.theme;
     }
     

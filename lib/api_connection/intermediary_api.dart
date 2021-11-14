@@ -33,7 +33,7 @@ Future<List<Intermediary>> fetchIntermediaries({required List<Place> places, req
         }
       });
     } catch (e) {
-      throw Exception("cant decode body. " + e.toString());
+      throw Exception("cant decode body. /intermediary_api/" + e.toString());
     }
     return list;
 

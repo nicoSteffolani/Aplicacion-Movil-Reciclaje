@@ -9,6 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:theme_mode_handler/theme_mode_handler.dart';
 import 'models/models_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
+import 'package:ecoinclution_proyect/my_widgets/notifications/_notification_service.dart';
+
+
+NotificationApi notification = NotificationApi();
 
 void main() {
   runApp(
@@ -60,6 +64,9 @@ class _MyApp extends State<MyApp> {
           home: FutureBuilder<bool>(
               future: userRepository.hasToken(id: 0),
               builder: (context,snapshot) {
+
+                notification.showScheduleNotification(5, "Hola, querido/a Usuario", "hace click para hacer un deposito");
+
                 if (snapshot.hasData){
                   if (snapshot.data!){
                     return HomePage();
