@@ -122,7 +122,7 @@ class ModelsManager with ChangeNotifier {
     if (searcherPositionStatus == SearcherPositionStatus.changed){
       coordinates = LatLng(
           _mapPosition.center!.latitude, _mapPosition.center!.longitude);
-      print("Posision na que ve");
+      //print("Posision na que ve");
       notifyListeners();
     }else {
       double tolerance = 0.010;

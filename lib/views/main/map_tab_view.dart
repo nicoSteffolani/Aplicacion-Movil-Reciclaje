@@ -58,18 +58,18 @@ class _MapPageState extends State<MapPage> {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              mm.updateAll();
+            },
+          ),
         ],
       ),
       body: loadMap()
     );
   }
   Widget loadMap(){
-    Future.delayed(Duration(milliseconds:10),() {
-      if (mm.getPlaceToCenter != null){
-        centerMapOnPlace(mm.getPlaceToCenter!);
-        mm.setPlaceToCenter = null;
-      }
-    });
     AppLocalizations? t = AppLocalizations.of(context);
     List<Marker> listMarker = [];
     mm.centers.forEach((row) {
@@ -105,7 +105,7 @@ class _MapPageState extends State<MapPage> {
                     height: 12,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.blue,
+                      color: Theme.of(context).colorScheme.primary,
 
                     ),
                   ),
@@ -158,7 +158,7 @@ class _MapPageState extends State<MapPage> {
                     key: Key("button"),
                       icon: Icon(
                         (locationStatus == LocationStatus.headingNorth)?Icons.arrow_upward :Icons.my_location,
-                        color: (locationStatus == LocationStatus.centred || locationStatus == LocationStatus.headingNorth)?Colors.blue: Theme.of(context).colorScheme.onSurface,
+                        color: (locationStatus == LocationStatus.centred || locationStatus == LocationStatus.headingNorth)?Theme.of(context).colorScheme.secondary: Theme.of(context).colorScheme.onSurface,
                       ),
                       onPressed: () {
                         centerMap();
@@ -188,7 +188,7 @@ class _MapPageState extends State<MapPage> {
             )
           )
         ),
-        (mm.searcherPositionStatus == SearcherPositionStatus.changed)?Align(
+        /*(mm.searcherPositionStatus == SearcherPositionStatus.changed)?Align(
             alignment: Alignment.topCenter,
             child: Padding(
                 padding: EdgeInsets.all(16),
@@ -206,7 +206,7 @@ class _MapPageState extends State<MapPage> {
                   ),
                 )
             )
-        ):Container()
+        ):Container()*/
       ],
     );
   }
@@ -375,7 +375,7 @@ class __BottomSheetContentState extends State<_BottomSheetContent> {
                           child: Container(
 
                               decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).colorScheme.secondary,
                                   borderRadius: BorderRadius.all(Radius.circular(5))),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),

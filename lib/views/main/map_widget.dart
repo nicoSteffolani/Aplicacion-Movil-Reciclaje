@@ -1,7 +1,3 @@
-import 'package:ecoinclution_proyect/models/models.dart';
-import 'package:ecoinclution_proyect/models/models_manager.dart';
-import 'package:ecoinclution_proyect/my_widgets/map/MapPoint.dart';
-import 'package:ecoinclution_proyect/views/main/cooperatives_tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';

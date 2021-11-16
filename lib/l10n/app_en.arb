@@ -37,11 +37,14 @@
     "intermediaries": "Intermediaries",
     "intermediary": "Intermediary",
     "viewOnMap": "View on map",
-
+    "address": "Address",
 
     "deposits": "Deposits",
+    "deposit": "deposit",
+    "depositOf": "Deposit of",
     "date": "Date",
     "dateToDeposit": "Depositary date",
+    "recyclingType": "Recycling type",
     "place": "Place",
     "amount": "Amount",
     "weight": "Weight"

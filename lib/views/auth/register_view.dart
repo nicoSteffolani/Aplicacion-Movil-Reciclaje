@@ -190,6 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               .authenticateUser(username: usernameController.text, password: passwordController.text)
                               .then((value) {
                             userRepository.persistToken(user: value);
+                            mm.modelsStatus = ModelsStatus.started;
                             Navigator.of(context)
                                 .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
 

@@ -8,9 +8,9 @@ CustomTheme currentTheme = CustomTheme();
 class CustomTheme extends ChangeNotifier{
   static ThemeData get lightTheme {
     return ThemeData(
-      primaryColor: Color(0xFF4CAE50),
-      accentColor: Color(0xFFFDFD72),
       brightness: Brightness.light,
+      primaryColor: Color(0xFFC65F00),
+      accentColor: Color(0xFF67BC00),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedIconTheme: IconThemeData(
           size: 35,
@@ -18,27 +18,41 @@ class CustomTheme extends ChangeNotifier{
         showUnselectedLabels: true,
         showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xFFFFFFFF),
-        unselectedItemColor: Color(0xFFFFFFFF).withOpacity(0.38),
-        backgroundColor: Color(0xFF4CAE50),
+        //selectedItemColor: Color(0xFFFFFFFF),
+        //unselectedItemColor: Color(0xFFFFFFFF).withOpacity(0.38),
+      ),
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+          brightness: Brightness.light,
+          primary: Color(0xFFC65F00),
+          primaryVariant:Color(0xFFC65F00),
+          secondary:Color(0xFF67BC00),
+          secondaryVariant: Color(0xFF67BC00),
+          surface: Colors.white
       ),
     );
   }
   static ThemeData get darkTheme {
     return ThemeData(
-      primaryColor: Color(0xFF087E23),
-      accentColor: Color(0xFFC7B801),
       brightness: Brightness.dark,
+      primaryColor: Color(0xFFC65F00),
+      accentColor: Color(0xFF67BC00),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedIconTheme: IconThemeData(
           size: 35,
         ),
+        selectedItemColor: Color(0xFFC65F00),
         showUnselectedLabels: true,
         showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xFFFFFFFF),
-        unselectedItemColor: Color(0xFFFFFFFF).withOpacity(0.38),
-        backgroundColor: Color(0xFF087E23),
+      ),
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+        brightness: Brightness.dark,
+        primary: Color(0xFFC65F00),
+        primaryVariant: Color(0xFFC65F00),
+        secondary: Color(0xFF67BC00),
+        secondaryVariant: Color(0xFF67BC00),
+        surface:  Color(0xFF2B2B2B),
+        onSurface: Color(0xFFFFFFFF),
       ),
     );
   }
@@ -54,7 +68,7 @@ class MyManager implements IThemeModeManager {
       print("paso por aca");
       theme = user.theme;
     }
-    
+
     return theme;
   }
 

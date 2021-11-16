@@ -105,10 +105,8 @@ class _DepositsPageState extends State<DepositsPage> {
               child: const Icon(Icons.delete), alignment: Alignment.centerLeft,)
         ),
         child: ListTile(
-          title: Text(
-              'Deposito N°${i + 1}'
-          ),
-          subtitle: Text("${t!.date}: ${deposit.date}"),
+          title: Text("${t!.depositOf} ${deposit.recyclingType.name}"),
+          subtitle: Text("${t.date}: ${deposit.date}"),
           leading: IconButton(
             icon: const Icon(Icons.info,),
             onPressed: () {
@@ -137,17 +135,18 @@ class _DepositsPageState extends State<DepositsPage> {
 class DeleteDeposit extends StatelessWidget {
   @override
   Widget build(BuildContext context){
+    AppLocalizations? t = AppLocalizations.of(context);
     return AlertDialog(
       title: Text("Estas seguro de que quieres eliminar este deposito?"),
       actions: <Widget>[
         OutlinedButton( // Diseña el boton
-          child: Text("CANCELAR"),
+          child: Text(t!.closeButton),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
         ),
         OutlinedButton( // Diseña el boton
-          child: Text("ACEPTAR",),
+          child: Text(t.acceptButton),
           onPressed: () {
             Navigator.of(context).pop(true);
           },
@@ -156,54 +155,71 @@ class DeleteDeposit extends StatelessWidget {
     );
   }
 }
-class DepositInfo extends StatelessWidget {
+class DepositInfo extends StatefulWidget {
   final int index;
   final Deposit deposit;
-
   DepositInfo({Key? key, required this.index, required this.deposit}) : super(key: key);
 
   @override
+  _DepositInfoState createState() => _DepositInfoState();
+}
+
+class _DepositInfoState extends State<DepositInfo> {
+  late ModelsManager mm;
+
+  @override
+  initState() {
+    super.initState();
+    mm = context.read<ModelsManager>();
+  }
+
+  @override
   Widget build(BuildContext context){
+    AppLocalizations? t = AppLocalizations.of(context);
     return AlertDialog(
-      title: Text('Deposito N°$index'),
+      scrollable: true,
+      title: Text("${t!.depositOf} ${widget.deposit.recyclingType.name}"),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
               leading: const Icon(Icons.date_range),
-              title: Text("Fecha a depositar"),
-              subtitle: Text("${deposit.date}")
+              title: Text(t.dateToDeposit),
+              subtitle: Text("${widget.deposit.date}")
           ),
           ListTile(
               leading: const Icon(Icons.location_pin),
-              title: Text("Lugar"),
-              subtitle: Text("${deposit.place.name}")
+              title: Text(t.place),
+              subtitle: Text("${widget.deposit.place.name}"),
+              onTap: () {
+                mm.setPlaceToCenter = widget.deposit.place;
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+              }
           ),
           ListTile(
-              leading: const Icon(
-                  IconData(0xe900, fontFamily: 'custom')),
-              title: Text("Tipo de reciclado"),
-              subtitle: Text("${deposit.recyclingType.name}")
+              leading: Icon(
+                  IconData(0xe900, fontFamily: 'custom'),color: Theme.of(context).colorScheme.secondary),
+              title: Text(t.recyclingType),
+              subtitle: Text("${widget.deposit.recyclingType.name}")
           ),
           ListTile(
               leading: const Icon(
                   IconData(0xe902, fontFamily: 'custom')),
-              title: Text("Cantidad"),
-              subtitle: Text("${deposit.amount}")
+              title: Text(t.amount),
+              subtitle: Text("${widget.deposit.amount}")
           ),
           ListTile(
               leading: const Icon(
                   IconData(0xe901, fontFamily: 'custom')),
-              title: Text("Peso "),
-              subtitle: Text("${deposit.weight} Kg")
+              title: Text(t.weight),
+              subtitle: Text("${widget.deposit.weight} Kg")
           ),
         ],
       ),
       actions: <Widget>[
         OutlinedButton(
-          child: Text(
-            "CERRAR",
-          ),
+          child: Text(t.closeButton),
           onPressed: () {
             Navigator.of(context).pop();
           },

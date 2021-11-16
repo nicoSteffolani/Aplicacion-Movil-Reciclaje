@@ -36,10 +36,14 @@
     "intermediaries": "Intermediarios",
     "intermediary": "Intermediario",
     "viewOnMap": "Ver en mapa",
+    "address": "Direccion",
 
     "deposits": "Depositos",
+    "deposit": "Deposito",
+    "depositOf": "Deposito de ",
     "date": "Fecha",
     "dateToDeposit": "Fecha a depositar",
+    "recyclingType": "Tipo de reciclado",
     "place": "Lugar",
     "amount": "Cantdidad",
     "weight": "Peso"
