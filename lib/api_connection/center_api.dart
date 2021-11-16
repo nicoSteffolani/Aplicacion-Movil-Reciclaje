@@ -68,7 +68,7 @@ Future<List<CenterModel>> filterCentersByPosition( {required List<RecyclingType>
         list.add(centro);
       });
     } catch (e) {
-      throw Exception("cant decode body. " + e.toString());
+      throw Exception("cant decode body. /center_api/ " + e.toString());
     }
     return list;
   } else {

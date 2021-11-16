@@ -29,7 +29,7 @@ Future<List<RecyclingType>> fetchRecyclingTypes({required User user}) async {
         list.add(type);
       });
     } catch (e) {
-      throw Exception("cant decode body. " + e.toString());
+      throw Exception("cant decode body. /recycle_type/" + e.toString());
     }
     return list;
 

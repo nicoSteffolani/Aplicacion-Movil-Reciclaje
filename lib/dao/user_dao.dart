@@ -9,6 +9,7 @@ class UserDao {
     final db = await dbProvider.database;
 
     var result = db.insert(userTable, user.toDatabaseJson(),conflictAlgorithm: ConflictAlgorithm.replace);
+    print(result);
     return result;
   }
   Future<int> updateUser(User user) async {
@@ -53,7 +54,7 @@ class UserDao {
 
       return map;
     } catch (error) {
-      throw Exception("error");
+      throw Exception("error /userdao/");
 
     }
   }

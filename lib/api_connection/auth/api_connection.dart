@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:ecoinclution_proyect/models/auth/api_model.dart';
 import 'package:http/http.dart' as http;
 
-final _base = "http://ecoinclusion.herokuapp.com";
+final _base = "https://ecoinclusion.herokuapp.com";
 final _tokenEndpoint = "/api-token-auth/";
 final _tokenURL = _base + _tokenEndpoint;
 final Uri tokenUri = Uri.parse(_tokenURL);
@@ -17,12 +17,12 @@ Future<Token> getToken(UserLogin userLogin) async {
     },
     body: jsonEncode(userLogin.toDatabaseJson()),
   );
-  print("request made");
+  print("request made /api_conection/");
   if (response.statusCode == 200) {
     print(utf8.decode(response.bodyBytes));
     return Token.fromJson(json.decode(utf8.decode(response.bodyBytes)));
   } else {
-    print(" Error ");
+    print(" Error ${response.statusCode} ");
     print(json.decode(utf8.decode(response.bodyBytes)));
     throw json.decode(utf8.decode(response.bodyBytes));
   }
@@ -41,12 +41,12 @@ Future<Map<String,dynamic>> postUser(UserRegister userRegister) async {
     body: jsonEncode(userRegister.toDatabaseJson()),
   );
 
-  print("request made ${userRegister.toDatabaseJson()}");
+  print("request made ${userRegister.toDatabaseJson()} /api_conection/");
   if (response.statusCode == 201) {
     print(utf8.decode(response.bodyBytes));
     return json.decode(utf8.decode(response.bodyBytes));
   } else {
-    print("error ${response.statusCode}");
+    print("error ${response.statusCode} /api_conection/");
     throw json.decode(utf8.decode(response.bodyBytes));
   }
 }
