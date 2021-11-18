@@ -5,7 +5,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class NotificationApi {
-
+  int _id = 0;
 
   final FlutterLocalNotificationsPlugin _notification = FlutterLocalNotificationsPlugin();
 
@@ -31,13 +31,13 @@ class NotificationApi {
 
     await _initializeTime();
 
-    }
+  }
 
   NotificationDetails getPCS() {
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails(
         'your channel id',
-        'your channel name',
+        'EcoPuntos notificaciones',
         channelDescription: 'your channel description',
         importance: Importance.max,
         priority: Priority.high,
@@ -64,7 +64,6 @@ class NotificationApi {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
       print("un dia agregado");
     }
-    commonNotifications(0, "title1", "body1");
     return scheduledDate;
   }
 
@@ -133,8 +132,9 @@ class NotificationApi {
       String title,
       String body,
       ) {
+    _id ++;
     notificationService();
-    _notification.show(id, title, body, getPCS());
+    _notification.show(_id, title, body, getPCS());
   }
 
 }

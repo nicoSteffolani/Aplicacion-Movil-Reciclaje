@@ -1,4 +1,4 @@
-import 'package:ecoinclution_proyect/my_widgets/notifications/_notification_service.dart';
+import 'package:ecoinclution_proyect/notifications/_notification_service.dart';
 import 'package:ecoinclution_proyect/models/models_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

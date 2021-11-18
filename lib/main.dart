@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:theme_mode_handler/theme_mode_handler.dart';
 import 'models/models_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localization.dart';
-import 'package:ecoinclution_proyect/my_widgets/notifications/_notification_service.dart';
+import 'package:ecoinclution_proyect/notifications/_notification_service.dart';
 
 
 NotificationApi notification = NotificationApi();

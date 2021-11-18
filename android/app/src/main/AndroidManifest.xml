@@ -7,7 +7,7 @@
 
     <application
         android:icon="@mipmap/launcher_icon"
-        android:label="EcoCordoba"
+        android:label="EcoPuntos"
         android:usesCleartextTraffic="true"
         >
         <meta-data android:name="com.google.android.geo.API_KEY"
